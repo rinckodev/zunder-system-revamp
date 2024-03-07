@@ -3,8 +3,8 @@ import { createRow } from "@magicyan/discord";
 import { ApplicationCommandType, ButtonBuilder, ButtonStyle } from "discord.js";
 
 new Command({
-	name: "ping",
-	description: "🏓 replies with pong",
+	name: "informações",
+	description: "Comando de informações",
 	dmPermission: false,
 	type: ApplicationCommandType.ChatInput,
 	async run(interaction){

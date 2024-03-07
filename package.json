@@ -15,6 +15,7 @@
     "start:dev": "node --env-file .env.development ."
   },
   "dependencies": {
+    "@magicyan/canvas": "^0.0.10",
     "@magicyan/discord": "^1.0.21",
     "chalk": "^5.3.0",
     "consola": "^3.2.3",
