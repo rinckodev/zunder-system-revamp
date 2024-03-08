@@ -11,4 +11,8 @@ export async function initCanvas(){
         const fonts = GlobalFonts.loadFontsFromDir(path);
         log.success(chalk.magenta(`${chalk.underline(basename(path))} ${fonts} fonts loaded `));
     }
+
+    console.table(
+        GlobalFonts.getFamilies()
+    );
 }

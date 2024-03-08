@@ -4,7 +4,7 @@ import { ApplicationCommandType } from "discord.js";
 
 new Command({
     name: "configurações",
-    description: "Painel de configurações",
+    description: "Painel de configurações.",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     async run(interaction){

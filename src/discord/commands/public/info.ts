@@ -1,5 +1,4 @@
 import { Command } from "#base";
-import { db } from "#database";
 import { icon, sendGuildLog } from "#functions";
 import { settings } from "#settings";
 import { brBuilder, createEmbed } from "@magicyan/discord";
@@ -11,10 +10,7 @@ new Command({
 	dmPermission: false,
 	type: ApplicationCommandType.ChatInput,
 	async run(interaction){
-		const { guild, member } = interaction;
-
-		const data = await db.members.get(member);
-		console.log(data);
+		const { guild } = interaction;
 
 		const embeds = createEmbed({
 			color: settings.colors.azoxo,

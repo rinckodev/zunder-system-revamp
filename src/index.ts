@@ -6,3 +6,4 @@ const client = createClient(); initDiscordEvents(client);
 client.start();
 
 initCanvas();
+
