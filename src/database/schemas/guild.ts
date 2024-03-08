@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import { t } from "../utils.js";
 
-const channelInfo = { id: t.string, url: t.string };
+const channelInfo = { id: String, url: String };
 
 export const guildSchema = new Schema(
     {
@@ -9,6 +9,14 @@ export const guildSchema = new Schema(
         channels: {
             logs: channelInfo,
             general: channelInfo,
+            global: channelInfo,
+            announcement: channelInfo,
+            bank: channelInfo,
+            terms: channelInfo,
+            management: channelInfo,
+            records: channelInfo,
+            audit: channelInfo,
+            party: channelInfo
         }
     },
     {
