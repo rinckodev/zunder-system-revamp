@@ -1,5 +1,6 @@
 import { Command } from "#base";
-import { icon } from "#functions";
+import { db } from "#database";
+import { icon, sendGuildLog } from "#functions";
 import { settings } from "#settings";
 import { brBuilder, createEmbed } from "@magicyan/discord";
 import { ApplicationCommandType, hyperlink } from "discord.js";
@@ -10,7 +11,10 @@ new Command({
 	dmPermission: false,
 	type: ApplicationCommandType.ChatInput,
 	async run(interaction){
-		const { guild } = interaction;
+		const { guild, member } = interaction;
+
+		const data = await db.members.get(member);
+		console.log(data);
 
 		const embeds = createEmbed({
 			color: settings.colors.azoxo,
@@ -28,5 +32,8 @@ new Command({
 
 		await interaction.reply({ ephemeral, embeds });
 
+		const success = await sendGuildLog({ guild: interaction.guild, details: `${icon(":a:spinner")} testando` });
+
+		console.log(success);
 	}
 });

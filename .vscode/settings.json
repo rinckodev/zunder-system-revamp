@@ -9,6 +9,7 @@
     "deprecated": "Archive",
     "development": "Test",
     "production": "Dist",
+    "systems": "Ci",
     
     "staff": "Admin",
     "protection": "Guard",

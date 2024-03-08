@@ -1,7 +1,8 @@
 import { Schema } from "mongoose";
 import { t } from "../utils.js";
 
-const channelInfo = { id: String, url: String };
+const channelInfo = new Schema({ id: t.string, url: t.string }, { _id: false });
+const roleInfo =  new Schema({ id: t.string }, { _id: false });
 
 export const guildSchema = new Schema(
     {
@@ -17,6 +18,19 @@ export const guildSchema = new Schema(
             records: channelInfo,
             audit: channelInfo,
             party: channelInfo
+        },
+        ranks: {
+            roles: {
+                [5]: roleInfo,
+                [4]: roleInfo,
+                [3]: roleInfo,
+                [2]: roleInfo,
+                [1]: roleInfo,
+            },
+            types: {
+                zunder: roleInfo,
+                discord: roleInfo
+            }
         }
     },
     {
