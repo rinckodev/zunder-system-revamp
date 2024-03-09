@@ -2,10 +2,10 @@ import { GuildSchema } from "#database";
 import { formatedChannelMention, icon } from "#functions";
 import { settings } from "#settings";
 import { brBuilder, createEmbed, createRow } from "@magicyan/discord";
-import { ChannelSelectMenuBuilder, StringSelectMenuBuilder, StringSelectMenuComponentData } from "discord.js";
+import { ChannelSelectMenuBuilder, StringSelectMenuBuilder } from "discord.js";
 import { settingsNav } from "./nav.js";
 
-export const settingsChannelsSelectOptions: StringSelectMenuComponentData["options"] = [
+export const settingsChannelsSelectOptions = [
     { emoji: "🌍", label: "Global", value: "global", description: "Canal global",  },
     { emoji: "📢", label: "Anúncios", value: "announcement", description: "Canal de novidades" },
     { emoji: "💵", label: "Banco", value: "bank", description: "Banco da Zunder" },
@@ -18,10 +18,10 @@ export const settingsChannelsSelectOptions: StringSelectMenuComponentData["optio
     
     { emoji: "📃", label: "Logs", value: "logs", description: "Canal de logs mais detalhados" },
     { emoji: "📋", label: "Auditoria", value: "audit", description: "Onde fica registrado as atividades dos membros" },
-];
+] as const;
 
 export function settingsChannelsMenu(guildData: GuildSchema){
-    const channels = (guildData.channels ?? {}) as Record<string, { id: string }>;
+    const channels = guildData.channels ?? {};
 
     const display = settingsChannelsSelectOptions.map(({ label, emoji, value }) => 
         `- ${emoji} ${label}: ${formatedChannelMention(channels[value]?.id, "`Não definido`")}` 
@@ -39,7 +39,7 @@ export function settingsChannelsMenu(guildData: GuildSchema){
         new StringSelectMenuBuilder({
             customId: "menu/settings/channels",
             placeholder: "Selecione o canal que deseja configurar",
-            options: settingsChannelsSelectOptions
+            options: Array.from(settingsChannelsSelectOptions)
         })
     );
 

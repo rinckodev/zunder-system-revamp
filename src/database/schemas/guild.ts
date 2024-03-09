@@ -20,12 +20,12 @@ export const guildSchema = new Schema(
             party: channelInfo
         },
         ranks: {
-            roles: {
-                [5]: roleInfo,
-                [4]: roleInfo,
-                [3]: roleInfo,
-                [2]: roleInfo,
-                [1]: roleInfo,
+            levels: {
+                "5": roleInfo,
+                "4": roleInfo,
+                "3": roleInfo,
+                "2": roleInfo,
+                "1": roleInfo,
             },
             types: {
                 zunder: roleInfo,

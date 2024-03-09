@@ -21,6 +21,10 @@ new Component({
                 interaction.editReply(menus.settings.channels.menu(guildData));
                 return;
             }
+            case "ranks":{
+                interaction.editReply(menus.settings.ranks.menu(guild));
+                return;
+            }
         }
     }
 });

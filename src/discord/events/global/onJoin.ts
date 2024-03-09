@@ -22,5 +22,6 @@ new Event({
         const buffer = await canvas.encode("png");
         const attachment = new AttachmentBuilder(buffer, { name: "image.png" });
         globalChannel.send({ content: time(new Date(), "F"), files: [attachment] });
+
     },
 });

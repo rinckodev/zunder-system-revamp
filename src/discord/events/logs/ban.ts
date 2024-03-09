@@ -8,8 +8,7 @@ new Event({
     event: "userBanAdd",
     run(user, executor, reason, guild) {
         
-        sendGuildRecord({
-            guild,
+        sendGuildRecord({ guild,
             title: "🔥 Banimento", color: "danger",
             thumbnail: createEmbedAsset(user.displayAvatarURL()),
             details: brBuilder(

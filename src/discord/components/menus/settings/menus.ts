@@ -28,5 +28,53 @@ new Component({
                 }
             }
         }
+
+        if (interaction.isStringSelectMenu()){
+            switch(menu){
+                case "ranks":{
+                    await interaction.deferUpdate();
+                    const guildData = await db.guilds.get(guild.id);
+
+                    const [selectedItem] = interaction.values;
+                    
+                    const [submenu] = args;
+                    switch(submenu){
+                        case "types":{
+                            interaction.editReply(
+                                menus.settings.ranks.types.submenu(guildData, selectedItem)
+                            );
+                            return;
+                        }
+                        case "levels":{
+                            interaction.editReply(
+                                menus.settings.ranks.levels.submenu(guildData, selectedItem)
+                            );
+                            return;
+                        }
+                    }
+                    return;
+                }
+            }
+        }
+
+        if (interaction.isRoleSelectMenu()){
+            await interaction.deferUpdate();
+            const guildData = await db.guilds.get(guild.id);
+            
+            const [selectedRoleId] = interaction.values;
+
+            switch(menu){
+                case "ranks":{
+                    const [submenu, selected] = args as ["levels" | "types", string];
+
+                    await guildData.$set(`ranks.${submenu}.${selected}`, { id: selectedRoleId }).save();
+                    
+                    interaction.editReply(
+                        menus.settings.ranks[submenu].menu(guild, guildData)
+                    );
+                    return;
+                }
+            }
+        }
     },
 });
