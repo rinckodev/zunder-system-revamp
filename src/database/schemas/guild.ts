@@ -7,6 +7,9 @@ const roleInfo =  new Schema({ id: t.string }, { _id: false });
 export const guildSchema = new Schema(
     {
         id: t.string,
+        bank:{
+            total: { type: Number, default: 0 }
+        },
         channels: {
             logs: channelInfo,
             general: channelInfo,

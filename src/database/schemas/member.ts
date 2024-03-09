@@ -20,7 +20,10 @@ export const memberSchema = new Schema(
         guildId: t.string,
         rank: rankSchema,
         wallet: {
-            coins: { type: Number, default: 0 },
+            coins: { type: Number },
+        },
+        statistics:{
+            donation: { type: Number }   
         }
     },
     {

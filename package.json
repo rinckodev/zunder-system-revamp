@@ -18,6 +18,7 @@
     "@magicyan/canvas": "^0.0.10",
     "@magicyan/discord": "^1.0.21",
     "@magicyan/discord-events": "^1.0.13",
+    "@magicyan/discord-ui": "^0.0.3",
     "chalk": "^5.3.0",
     "consola": "^3.2.3",
     "discord.js": "^14.14.1",
