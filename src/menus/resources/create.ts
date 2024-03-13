@@ -10,9 +10,10 @@ interface ResourcesCreateMenuProps {
     thumbnail?: string | null;
     banner?: string | null;
     category?: string;
+    tags?: string[];
 }
 export function resourcesCreateMenu(member: GuildMember, props: ResourcesCreateMenuProps){
-    const { category, ...info } = props;
+    const { category, tags=[], ...info } = props;
     const { title, description, url, banner, thumbnail } = info;
     
     const ready = Boolean(category && title && description && url);
@@ -34,6 +35,11 @@ export function resourcesCreateMenu(member: GuildMember, props: ResourcesCreateM
             { name: "Categoria", value: category??"! Não definida ainda !" },
         ]
     });
+
+    if (tags.length >= 1) embed.addFields({ 
+        name: "Tags", value: tags.map(inlineCode).join(", ")
+    }); 
+
     const embedInfo = createEmbed({
         color, description: ready 
         ? `${icon("check")} O recurso está pronto para ser enviado!`
@@ -56,6 +62,13 @@ export function resourcesCreateMenu(member: GuildMember, props: ResourcesCreateM
             label: "Editar categoria",
             style: ButtonStyle.Primary,
             emoji: icon("favorite")
+        }),
+        new ButtonBuilder({
+            customId: "resources/create/tags",
+            label: "Editar tags",
+            style: ButtonStyle.Primary,
+            emoji: "🏷️",
+            disabled: !category,
         }),
     );
 

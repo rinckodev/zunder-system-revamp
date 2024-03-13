@@ -1,19 +1,17 @@
 import { Schema } from "mongoose";
 import { t } from "../utils.js";
 
-const channelInfo = new Schema({ id: t.string, url: t.string }, { _id: false });
-const roleInfo =  new Schema({ id: t.string }, { _id: false });
-
 const resourceCategory = new Schema({
     id: t.string,
     title: t.string,
     description: t.string,
     emoji: { type: String, default: "📂" },
     channel: {
-        type: channelInfo,
+        type: t.channel,
         required: true
     },
-    role: roleInfo
+    role: t.role,
+    tags: [String]
 
 }, { _id: false });
 
@@ -24,28 +22,28 @@ export const guildSchema = new Schema(
             total: { type: Number, default: 0 }
         },
         channels: {
-            logs: channelInfo,
-            general: channelInfo,
-            global: channelInfo,
-            announcement: channelInfo,
-            bank: channelInfo,
-            terms: channelInfo,
-            management: channelInfo,
-            records: channelInfo,
-            audit: channelInfo,
-            party: channelInfo
+            logs: t.channel,
+            general: t.channel,
+            global: t.channel,
+            announcement: t.channel,
+            bank: t.channel,
+            terms: t.channel,
+            management: t.channel,
+            records: t.channel,
+            audit: t.channel,
+            party: t.channel
         },
         ranks: {
             levels: {
-                "5": roleInfo,
-                "4": roleInfo,
-                "3": roleInfo,
-                "2": roleInfo,
-                "1": roleInfo,
+                "5": t.role,
+                "4": t.role,
+                "3": t.role,
+                "2": t.role,
+                "1": t.role,
             },
             types: {
-                zunder: roleInfo,
-                discord: roleInfo
+                zunder: t.role,
+                discord: t.role
             }
         },
         resources: {

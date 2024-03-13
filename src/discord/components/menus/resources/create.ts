@@ -1,11 +1,13 @@
 import { Component, Modal } from "#base";
 import { db } from "#database";
-import { embedChat, getEmbedFiles, icon } from "#functions";
+import { deleteMessage, embedChat, getEmbedFiles, icon } from "#functions";
 import { menus } from "#menus";
 import { settings } from "#settings";
-import { createEmbed, createEmbedAuthor, createLinkButton, createModalInput, createRow, findChannel } from "@magicyan/discord";
+import { EmbedPropery, createEmbed, createEmbedAuthor, createLinkButton, createModalInput, createRow, findChannel } from "@magicyan/discord";
 import { confirm } from "@magicyan/discord-ui";
-import { ButtonBuilder, ButtonStyle, ComponentType, Embed, StringSelectMenuBuilder, TextInputStyle, codeBlock } from "discord.js";
+import { ButtonBuilder, ButtonStyle, ComponentType, StringSelectMenuBuilder, StringSelectMenuComponentData, TextInputStyle, codeBlock, inlineCode, roleMention } from "discord.js";
+import { resourceCommand } from "#discord/commands";
+import { getResourceInfo } from "./utils.js";
 
 new Component({
     customId: "resources/create/:menu",
@@ -77,26 +79,34 @@ new Component({
             }
             case "submit":{
                 await interaction.deferUpdate();
-                const { title, description, url, category: categoryId, thumbnail, banner } = getResourceInfo(resourceEmbed);
+                const { title, description, url, category: categoryId, tags, thumbnail, banner } = getResourceInfo(resourceEmbed);
                 
                 const guildData = await db.guilds.get(guild.id);
                 const categories = guildData.resources?.categories!;
                 const category = categories.find(c => c.id === categoryId);
                 const channel = findChannel(guild).byId(category?.channel.id??"");
                 
-                if (!channel){
+                if (!category || !channel){
                     const embed = embedChat("danger", "O canal da categoria escolhida não está definido!");
                     interaction.followUp({ ephemeral, embeds: [embed] });
                     return;
+                }
+                
+                const fields: EmbedPropery<"fields"> = [
+                    { name: "Autor", value: member.toString(), inline }
+                ];
+                
+                if (tags && tags.length >= 1){
+                    fields.push({
+                        name: "Tags", value: tags.map(inlineCode).join(", "), inline
+                    });
                 }
                 
                 const embedFinal = createEmbed({
                     color: settings.colors.primary,
                     author: createEmbedAuthor({ user: member.user }),
                     title, description, url, thumbnail, image: banner,
-                    fields: [
-                        { name: "Autor", value: member.toString() }
-                    ]
+                    fields
                 });
 
                 const resourceRow = createRow(
@@ -131,12 +141,28 @@ new Component({
                         await interaction.update({ embeds: [embed], components: [] });
 
                         channel.send({ embeds: [embedFinal], files: getEmbedFiles(embedFinal), components: [resourceRow] })
-                        .then(message => {
+                        .then(async message => {
                             const embed = embedChat("success", `${icon("check")} Recurso enviado com sucesso! Confira: ${message.url}`);
                             interaction.editReply({ embeds: [embed] });
                         
-                            message.react("👍");
-                            message.react("👎");
+                            await message.react("👍");
+                            await message.react("👎");
+
+                            if (category.role?.id){
+                                deleteMessage(
+                                    await message.reply({ 
+                                        content: roleMention(category.role.id) 
+                                    }), 300
+                                );
+                            }
+
+                            const now = new Date();
+                            const time = 1000 * 60 * 2;
+                            now.setMilliseconds(now.getMilliseconds() + time);
+
+                            resourceCommand.store.cooldowns.set(
+                                `${guild.id}/${member.id}/create`, now, time
+                            );
                         })
                         .catch(err => {
                             const embed = embedChat("danger", `${icon("cancel")} Não foi possível enviar o recurso! ${codeBlock(err)}`);
@@ -144,6 +170,45 @@ new Component({
                         });
                     },
                 });
+                return;
+            }
+            case "tags":{
+                await interaction.deferUpdate();
+                
+                const { category: categoryId, tags } = getResourceInfo(resourceEmbed);
+ 
+                const guildData = await db.guilds.get(guild.id);
+                const categories = guildData.resources?.categories!;
+                const category = categories.find(c => c.id === categoryId!)!;
+                if (category.tags.length < 1){
+                    const embed = embedChat("danger", "A categoria seleciona não tem tags definidas!");
+                    interaction.followUp({ ephemeral, embeds: [embed] });
+                    return;
+                }
+
+                const { embeds:[embed] } = menus.resources.create(member, getResourceInfo(resourceEmbed));
+                
+                const options: StringSelectMenuComponentData["options"] = category.tags.map(tag => ({
+                    label: tag, value: tag,
+                }));
+                
+                if (tags && tags.length >= 1){
+                    options.unshift({
+                        label: "Remover tags",
+                        value: "remove",
+                        emoji: icon("cancel")
+                    });
+                }
+                
+                const row = createRow(
+                    new StringSelectMenuBuilder({
+                        customId: "resources/create/tags",
+                        placeholder: "Selecionar categoria",
+                        options, minValues: 1, maxValues: options.length,
+                    })
+                );
+
+                interaction.editReply({ embeds: [embed], components: [row] });
                 return;
             }
         }
@@ -162,11 +227,9 @@ new Modal({
                 const description = fields.getTextInputValue("description/input");
                 const url = fields.getTextInputValue("url/input");
 
-                const { thumbnail, banner, category } = getResourceInfo(resourceEmbed);
-
                 interaction.update(menus.resources.create(member, {
-                    title, description, url, 
-                    thumbnail, banner, category
+                    ...getResourceInfo(resourceEmbed),
+                    title, description, url
                 }))
                 .catch(async err => {
                     await interaction.deferUpdate();
@@ -182,31 +245,27 @@ new Component({
     customId: "resources/create/:menu",
     type: ComponentType.StringSelect, cache: "cached",
     async run(interaction, { menu }) {
-        const { member, message: { embeds: [resourceEmbed] }, values: [selected] } = interaction;
+        const { member, message: { embeds: [resourceEmbed] }, values } = interaction;
 
         switch(menu){
             case "category":{
+                const [selected] = values;
+
                 interaction.update(menus.resources.create(member, {
                     ...getResourceInfo(resourceEmbed),
                     category: selected
                 }));
                 return;
             }
+            case "tags":{
+                const isRemoveAllSelected = values.includes("remove");
+
+                interaction.update(menus.resources.create(member, {
+                    ...getResourceInfo(resourceEmbed),
+                    tags: isRemoveAllSelected ? undefined : values
+                }));
+                return;
+            }
         }
     },
 });
-
-function getResourceInfo(embed: Embed){
-    const isCategoryDefined = new RegExp(/^!.*!$/);
-    
-    const { value } = embed.fields[0];
-
-    return {
-        title: embed.data.title,
-        description: embed.data.description,
-        url: embed.data.url,
-        banner: embed.data.image?.url,
-        thumbnail: embed.data.thumbnail?.url,
-        category: isCategoryDefined.test(value) ? undefined : value 
-    };
-}

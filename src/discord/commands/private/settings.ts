@@ -4,7 +4,7 @@ import { embedChat, icon } from "#functions";
 import { menus } from "#menus";
 import { settings } from "#settings";
 import { brBuilder, createEmbed, notFound } from "@magicyan/discord";
-import { ApplicationCommandOptionType, ApplicationCommandType, ChannelType, roleMention } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, ChannelType, inlineCode, roleMention } from "discord.js";
 
 new Command({
     name: "configurações",
@@ -74,6 +74,11 @@ new Command({
                             description: "Cargo da categoria",
                             type: ApplicationCommandOptionType.Role,                            
                         },
+                        {
+                            name: "tags",
+                            description: "Tags da categoria (separe por vírgula)",
+                            type: ApplicationCommandOptionType.String,                            
+                        },
                     ]
                 },
                 {
@@ -113,6 +118,11 @@ new Command({
                             description: "Cargo da categoria",
                             type: ApplicationCommandOptionType.Role,                            
                         },
+                        {
+                            name: "tags",
+                            description: "Tags da categoria (separe por vírgula)",
+                            type: ApplicationCommandOptionType.String,                            
+                        },
                     ]
                 },
                 {
@@ -146,11 +156,17 @@ new Command({
                 const guildData = await db.guilds.get(guild.id);
                 const categories = guildData.resources?.categories!;
                 const length = categories.length;
-                
+
                 switch(subcommand){
                     case "listar":{
-                        const display = categories.map(({ id, title, emoji, channel, role }) => 
-                            `- ID: \`${id}\` | ${emoji} ${title} ${channel.url} ${role ? roleMention(role.id) : ""}`
+                        const display = categories.map(
+                            ({ id, title, emoji, channel, role, tags }) => ({
+                                name: id,
+                                value: brBuilder(
+                                    `${emoji} ${title} ${channel.url} ${role ? roleMention(role.id) : ""}`,
+                                    `> Tags ${tags.length >= 1 ? tags.map(inlineCode).join(" ") : "Sem tags"}`
+                                ),
+                            })
                         );
 
                         const embed = createEmbed({
@@ -158,8 +174,8 @@ new Command({
                             description: brBuilder(
                                 "# 📂 Categorias de recurso",
                                 `${length < 1 ? "Nenhuma categoria" : `Categorias: \`${length}\``}`,
-                                display
-                            )
+                            ),
+                            fields: display
                         });
                         interaction.editReply({ embeds: [embed] });
                         return;
@@ -178,11 +194,14 @@ new Command({
                         const emoji = notFound(options.getString("emoji"));
                         const channel = options.getChannel("channel", true);
                         const role = options.getRole("role");
+                        const rawTags = options.getString("tags")??"";
+                        const tags = rawTags.split(",").map(t => t.trim()).filter(Boolean);
 
                         categories.push({
                             id, title, description,
                             emoji, channel: { id: channel.id, url: channel.url },
-                            role: role ? { id: role.id } : undefined
+                            role: role ? { id: role.id } : undefined,
+                            tags: tags.length >= 1 ? tags.slice(0, 25) : undefined
                         });
 
                         await guildData.$set("resources.categories", categories).save();
@@ -207,6 +226,8 @@ new Command({
                         const emoji = notFound(options.getString("emoji"));
                         const channel = options.getChannel("channel");
                         const role = options.getRole("role");
+                        const rawTags = options.getString("tags")??"";
+                        const tags = rawTags.split(",").map(t => t.trim()).filter(Boolean);
 
                         const index = categories.findIndex(c => c.id == id);
 
@@ -215,6 +236,7 @@ new Command({
                         if (emoji) categories[index].emoji = emoji;
                         if (channel) categories[index].channel = { id: channel.id, url: channel.url };
                         if (role) categories[index].role = { id: role.id };
+                        if (tags.length >= 1) categories[index].tags = tags.slice(0, 25);
 
                         await guildData.$set("resources.categories", categories).save();
 

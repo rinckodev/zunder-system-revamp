@@ -24,7 +24,8 @@
 			"#functions": ["./src/functions/index.ts"],
 			"#tools": ["./src/tools/index.ts"],
 			"#classes": ["./src/classes/index.ts"],
-			"#menus": ["./src/menus/index.ts"]
+			"#menus": ["./src/menus/index.ts"],
+			"#discord/commands": ["./src/discord/commands/index.ts"],
 		},
 	},
 	"include": ["src"],
