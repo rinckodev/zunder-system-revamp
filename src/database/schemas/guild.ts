@@ -4,6 +4,19 @@ import { t } from "../utils.js";
 const channelInfo = new Schema({ id: t.string, url: t.string }, { _id: false });
 const roleInfo =  new Schema({ id: t.string }, { _id: false });
 
+const resourceCategory = new Schema({
+    id: t.string,
+    title: t.string,
+    description: t.string,
+    emoji: { type: String, default: "📂" },
+    channel: {
+        type: channelInfo,
+        required: true
+    },
+    role: roleInfo
+
+}, { _id: false });
+
 export const guildSchema = new Schema(
     {
         id: t.string,
@@ -34,6 +47,9 @@ export const guildSchema = new Schema(
                 zunder: roleInfo,
                 discord: roleInfo
             }
+        },
+        resources: {
+            categories: [resourceCategory]
         }
     },
     {

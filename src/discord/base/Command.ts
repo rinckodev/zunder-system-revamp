@@ -1,8 +1,8 @@
-import { ApplicationCommandType, CacheType, ChatInputCommandInteraction, Collection, MessageContextMenuCommandInteraction, UserContextMenuCommandInteraction, ChatInputApplicationCommandData, MessageApplicationCommandData, UserApplicationCommandData, Client, AutocompleteInteraction, CommandInteraction } from "discord.js";
-import { findCommand } from "@magicyan/discord";
-import { Store } from "./Store.js";
 import { log } from "#settings";
+import { findCommand } from "@magicyan/discord";
 import chalk from "chalk";
+import { ApplicationCommandType, AutocompleteInteraction, CacheType, ChatInputApplicationCommandData, ChatInputCommandInteraction, Client, Collection, CommandInteraction, MessageApplicationCommandData, MessageContextMenuCommandInteraction, UserApplicationCommandData, UserContextMenuCommandInteraction } from "discord.js";
+import { Store } from "./Store.js";
 
 type Cache<D> = D extends false ? "cached" : CacheType;
 
@@ -38,10 +38,8 @@ export class Command<N extends string, D extends boolean, T extends ApplicationC
 	}
 	public static onCommand(interaction: CommandInteraction){
 		const command = Command.commands.get(interaction.commandName);
-		if (command) {
-			command.run(interaction as never, command.store);
-			return;
-		}
+		if (!command) return;
+		command.run(interaction as never, command.store);
 	}
 	public static onAutocomplete(interaction: AutocompleteInteraction){
 		const command = Command.commands.get(interaction.commandName);

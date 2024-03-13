@@ -24,4 +24,4 @@ export const settingsMenu = {
             submenu: settingsRanksLevelMenu
         }
     }
-};
+} as const;

@@ -1,5 +1,5 @@
 import { Command } from "#base";
-import { icon, sendGuildLog } from "#functions";
+import { icon } from "#functions";
 import { settings } from "#settings";
 import { brBuilder, createEmbed } from "@magicyan/discord";
 import { ApplicationCommandType, hyperlink } from "discord.js";
@@ -27,9 +27,5 @@ new Command({
 		}).toArray();
 
 		await interaction.reply({ ephemeral, embeds });
-
-		const success = await sendGuildLog({ guild: interaction.guild, details: `${icon(":a:spinner")} testando` });
-
-		console.log(success);
 	}
 });
