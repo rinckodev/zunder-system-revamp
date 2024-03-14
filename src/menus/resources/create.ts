@@ -31,9 +31,9 @@ export function resourcesCreateMenu(member: GuildMember, props: ResourcesCreateM
         color, title, description, url,
         thumbnail: thumbnail,
         image: banner,
-        fields: [
-            { name: "Categoria", value: category??"! Não definida ainda !" },
-        ]
+        footer: {
+            text: `${category??"none"}/${member.id}`
+        },
     });
 
     if (tags.length >= 1) embed.addFields({ 
