@@ -11,7 +11,8 @@
     "watch": "tsx --watch --env-file .env ./src/index.ts",
     "watch:dev": "tsx --watch --env-file .env.development ./src/index.ts",
     "start": "node --env-file .env .",
-    "start:dev": "node --env-file .env.development ."
+    "start:dev": "node --env-file .env.development .",
+    "commit": "npx gitmoji-cli -c"
   },
   "dependencies": {
     "@magicyan/canvas": "^0.0.10",
