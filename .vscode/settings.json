@@ -12,6 +12,7 @@
     "production": "Dist",
     "systems": "Ci",
     
+    "profile": "Guard",
     "staff": "Admin",
     "protection": "Guard",
     
@@ -35,5 +36,7 @@
   },
   "explorer.fileNesting.enabled": true,
   "typescript.suggest.autoImports": true,
-  "window.title": "${rootName}${separator}${appName}"
+  "window.title": "${rootName}${separator}${appName}",
+
+  "explorer.incrementalNaming": "smart",
 }

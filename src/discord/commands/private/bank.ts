@@ -6,7 +6,6 @@ import { brBuilder, createEmbed, createRow, findChannel, toNull } from "@magicya
 import { confirm } from "@magicyan/discord-ui";
 import { ApplicationCommandOptionType, ApplicationCommandType, time } from "discord.js";
 
-
 new Command({
     name: "bank", nameLocalizations: { "pt-BR": "banco" },
     description: "Manages Zunder's bank",

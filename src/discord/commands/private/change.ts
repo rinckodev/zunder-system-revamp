@@ -107,6 +107,7 @@ new Command({
     ],
     async run(interaction) {
         const { options, guild, member } = interaction;
+
         if (member.id !== guild.ownerId) {
             const embed = embedChat("danger", `${icon("cancel")} Apenas o dono da guilda pode usar este comando!`);
             interaction.reply({ ephemeral, embeds: [embed] });

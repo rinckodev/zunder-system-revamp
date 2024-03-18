@@ -1,15 +1,16 @@
 import { db } from "#database";
 import { findChannel, spaceBuilder } from "@magicyan/discord";
-import { Attachment, AttachmentBuilder, Guild, time } from "discord.js";
+import { Attachment, AttachmentBuilder, Embed, Guild, time } from "discord.js";
 
 interface GuildLogOptions {
     guild: Guild,
     details: string,
     icon?: string,
-    files?: AttachmentBuilder[] | Attachment[]
+    files?: AttachmentBuilder[] | Attachment[],
+    embeds?: Embed[]
 }
 export async function sendGuildLog(options: GuildLogOptions){
-    const { guild, details, icon, files } = options;
+    const { guild, details, icon, files, embeds } = options;
     const { channels={} } = await db.guilds.get(guild.id);
 
     const channel = findChannel(guild).byId(channels?.logs?.id ?? "");
@@ -17,6 +18,6 @@ export async function sendGuildLog(options: GuildLogOptions){
 
     const text = [time(new Date(), "t"), icon, details].filter(Boolean) as string[];
     
-    const message = await channel.send({ content: spaceBuilder(text), files });
+    const message = await channel.send({ content: spaceBuilder(text), files, embeds });
     return Boolean(message);
 }
