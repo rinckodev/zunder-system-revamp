@@ -7,6 +7,7 @@ new Event({
     name: `${chalk.bgHex("#bad63d")(" Logs ")} Member kicked`,
     event: "userKick",
     run(user, executor, reason, guild) {
+        if (guild.id !== process.env.MAIN_GUILD_ID) return;
         
         sendGuildRecord({ guild,
             title: "👢 Expulsão", color: "danger",

@@ -1,7 +1,6 @@
 import { Component } from "#base";
 import { db } from "#database";
 import { menus } from "#menus";
-import { findChannel } from "@magicyan/discord";
 import { ComponentType } from "discord.js";
 
 new Component({
@@ -19,7 +18,7 @@ new Component({
             switch(menu){
                 case "channel":{
                     const [selected] = args;
-                    const { id, url } = findChannel(guild).byId(selectedChannelId)!;
+                    const { id, url } = guild.channels.cache.get(selectedChannelId)!;
 
                     await guildData.$set(`channels.${selected}`, { id, url }).save();
                     

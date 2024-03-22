@@ -9,12 +9,12 @@ new Event({
     event: "messageDelete",
     async run(message) {
 
-        if (!message.inGuild() || !message.member) return;
-        const { guild, channel, member, client } = message;    
+        if (!message.inGuild() || !message.author) return;
+        const { guild, channel, author, client } = message;
         
         if (guild.id !== process.env.MAIN_GUILD_ID) return;
-        if (member.id === client.user.id) return;
-        if (member.id === guild.ownerId) return;
+        if (author.id === client.user.id) return;
+        if (author.id === guild.ownerId) return;
         
         const files = Array.from(message.attachments.values());
 
@@ -22,7 +22,7 @@ new Event({
             guild, icon: "🗑️",                     
             files, embeds,
             details: brBuilder(
-                `mensagem de **@${member.user.username}** deletada em ${channelMention(channel.id)}`,
+                `mensagem de **@${author.username}** deletada em ${channelMention(channel.id)}`,
                 `> ${inlineCode(message.content)}`
             ),
         });
@@ -34,16 +34,16 @@ new Event({
     event: "messageUpdate",
     async run(oldMessage, newMessage) {
         if (!newMessage.inGuild() || !newMessage.member) return;
-        const { guild, channel, member, client } = newMessage;    
+        const { guild, channel, author, client } = newMessage;    
         
         if (guild.id !== process.env.MAIN_GUILD_ID) return;
-        if (member.id === client.user.id) return;
-        if (member.id === guild.ownerId) return;
+        if (author.id === client.user.id) return;
+        if (author.id === guild.ownerId) return;
     
         sendGuildLog({
             icon: "🗑️", guild,
             details: brBuilder(
-                `**@${member.user.username}** editou uma mensagem em ${channelMention(channel.id)}`,
+                `**@${author.username}** editou uma mensagem em ${channelMention(channel.id)}`,
                 `> ➜ : ${inlineCode(oldMessage.content ?? "")}`,
                 `> ${icon("pencil")} : ${inlineCode(newMessage.content)} `,
             ),
@@ -62,8 +62,8 @@ new Event({
             for (let i = 0; i < Math.min(3, messages.length); i++) {
                 const message = messages.pop();
                 if (!message) break;
-                if (!message.inGuild() || !message.member) continue;
-                const { guild, member, embeds } = message;    
+                if (!message.inGuild() || !message.author) continue;
+                const { guild, author, embeds } = message;    
                 
                 if (guild.id !== process.env.MAIN_GUILD_ID) continue;
                 
@@ -73,7 +73,7 @@ new Event({
                     guild, icon: "🗑️ \` Bulk \`", 
                     files, embeds,
                     details: brBuilder(
-                        `mensagem de **@${member.user.username}** deletada em ${channelMention(channel.id)}`,
+                        `mensagem de **@${author.username}** deletada em ${channelMention(channel.id)}`,
                         `> ${inlineCode(message.content)}`
                     ),
                 });

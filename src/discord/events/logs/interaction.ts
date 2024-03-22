@@ -10,6 +10,8 @@ new Event({
     async run(interaction) {
         const { guild, member } = interaction;
         if (!guild || !member) return;
+
+        if (guild.id !== process.env.MAIN_GUILD_ID) return;
     
         const getUsername = (user?: User) => {
             return user ? bold("@"+user.username) : bold("@"+member.user.username);

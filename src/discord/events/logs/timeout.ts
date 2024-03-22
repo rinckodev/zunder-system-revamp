@@ -9,6 +9,7 @@ new Event({
     name: `${chalk.bgHex("#bad63d")(" Logs ")} Member timeout`,
     event: "guildMemberTimeoutAdd",
     run(member, executor, expireAt, reason) {
+        if (member.guild.id !== process.env.MAIN_GUILD_ID) return;
         
         sendGuildRecord({
             guild: member.guild,
