@@ -1,6 +1,6 @@
 import { Embed, Guild, Message, TextChannel } from "discord.js";
 import { resolveMessageUrl } from "../utils/messages.js";
-import { findChannel, toNull } from "@magicyan/discord";
+import { EmbedPropery, findChannel, toNull } from "@magicyan/discord";
 import { icon } from "../utils/emojis.js";
 
 type ResourceInfoMode = "create" | "edit";
@@ -17,9 +17,11 @@ type ResourceInfo<M extends ResourceInfoMode> = {
     
     authorId: string;
     messageId: M extends "edit" ? string : undefined;
+    author: M extends "edit" ? EmbedPropery<"author"> : undefined;
 }
 export function getResourceInfo<M extends ResourceInfoMode = "create">(embed: Embed): ResourceInfo<M> {
     
+    const author = embed.data.author!;
     const [categoryId, authorId, messageId] = embed.data.footer!.text.split("/");
     const tagsField = embed.data?.fields?.find(f => f.name === "Tags") ?? { value: "" };
 
@@ -33,7 +35,8 @@ export function getResourceInfo<M extends ResourceInfoMode = "create">(embed: Em
         thumbnail: embed.data.thumbnail?.url,
         category: categoryId !== "none" ? categoryId : undefined,
         tags: tags.length >= 1 ? tags : undefined,
-        authorId, messageId
+        authorId, messageId,
+        author
     } as ResourceInfo<M>;
 }
 

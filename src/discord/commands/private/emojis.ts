@@ -1,5 +1,7 @@
 import { Command } from "#base";
-import { ApplicationCommandOptionType, ApplicationCommandType, AttachmentBuilder } from "discord.js";
+import { settings } from "#settings";
+import { brBuilder, createEmbed, findEmoji } from "@magicyan/discord";
+import { ApplicationCommandOptionType, ApplicationCommandType, AttachmentBuilder, formatEmoji, inlineCode } from "discord.js";
 
 new Command({
     name: "emojis",
@@ -16,6 +18,11 @@ new Command({
         {
             name: "bot",
             description: "Obter todos os emojis do bot",
+            type: ApplicationCommandOptionType.Subcommand,
+        },
+        {
+            name: "verificar",
+            description: "Verifica os emojis do arquivo de configurações",
             type: ApplicationCommandOptionType.Subcommand,
         },
     ],
@@ -44,6 +51,31 @@ new Command({
                 const attachment = new AttachmentBuilder(buffer, { name: "emojis.json" });
 
                 interaction.reply({ ephemeral, files: [attachment] });
+                return;
+            }
+            case "verificar":{
+                const check = (list: Record<string, string>) => {
+                    return Object.entries(list).map(([name, id]) => {
+                        const emoji = findEmoji(client).byId(id);
+                        return `- ${emoji ? `✅ ${formatEmoji(id, emoji?.animated??false)}` : "❌"} ${inlineCode(name)}`;
+                    });
+                };
+
+                const statics = check(settings.emojis.static);
+                const animateds = check(settings.emojis.animated);
+
+                const embed = createEmbed({
+                    color: settings.colors.primary,
+                    description: brBuilder(
+                        "# Lista de emojis",
+                        "## Estáticos",
+                        statics, 
+                        "## Animados",
+                        animateds,
+                    ),
+                });
+
+                interaction.reply({ ephemeral, embeds: [embed] });
                 return;
             }
         }

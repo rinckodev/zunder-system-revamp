@@ -44,8 +44,8 @@ new Event({
             icon: "🗑️", guild,
             details: brBuilder(
                 `**@${member.user.username}** editou uma mensagem em ${channelMention(channel.id)}`,
-                `> ➜ Original: ${inlineCode(oldMessage.content ?? "")}`,
-                `> ${icon("pencil")} editado: ${inlineCode(newMessage.content)} `,
+                `> ➜ : ${inlineCode(oldMessage.content ?? "")}`,
+                `> ${icon("pencil")} : ${inlineCode(newMessage.content)} `,
             ),
         });
     },

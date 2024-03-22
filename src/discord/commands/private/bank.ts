@@ -10,6 +10,7 @@ new Command({
     name: "bank", nameLocalizations: { "pt-BR": "banco" },
     description: "Manages Zunder's bank",
     descriptionLocalizations: { "pt-BR": "Administra o banco da Zunder" },
+    defaultMemberPermissions: ["Administrator"],
     type: ApplicationCommandType.ChatInput,
     dmPermission: false,
     options: [

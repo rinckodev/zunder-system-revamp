@@ -5,6 +5,7 @@ new Command({
     name: "emit",
     description: "Emit event",
     dmPermission: false,
+    defaultMemberPermissions: ["Administrator"],
     type: ApplicationCommandType.ChatInput,
     options: [
         {

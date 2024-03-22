@@ -30,7 +30,8 @@ export function settingsChannelsMenu(guildData: GuildSchema){
     const embeds = createEmbed({
         color: settings.colors.primary,
         description: brBuilder(
-            "# Configurar canais",
+            `# ${icon("gear")} Configurar canais`,
+            "",
             display
         ),
     }).toArray();

@@ -16,7 +16,7 @@ export function profileMainMenu(executorId: string, member: GuildMember, memberD
         color: member.displayColor,
         description: brBuilder(
             `> ${formatEmoji(rankLevelIcon)} ${member.roles.highest} ${member} **@${member.user.username}**`,
-            `> 🏷️ Nick: \` ${memberData.rank.nick} \``,
+            `> 🏷️ Nick: \` ${rank.nick} \``,
             `> Dispositivo: ${captalize(rank.device)}`,
             `> Tipo: ${formatEmoji(rankTypeIcon)} ${captalize(rank.type)}`,
         )

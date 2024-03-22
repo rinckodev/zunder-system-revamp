@@ -15,5 +15,23 @@ discordUi({
                 }
             }
         }
+    },
+    menus: {
+        multimenu:{
+            buttons: {
+                previous: { emoji: icon("previous"), label: "", },
+                home: { emoji: icon("home"), label: "", },
+                next: { emoji: icon("next"), label: "", },
+                close: { emoji: icon("cancel"), label: "", },
+            }
+        },
+        pagination: {
+            buttons: {
+                previous: { emoji: icon("previous"), label: "", },
+                home: { emoji: icon("home"), label: "", },
+                next: { emoji: icon("next"), label: "", },
+                close: { emoji: icon("cancel"), label: "", },
+            }
+        }
     }
 });

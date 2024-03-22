@@ -1,6 +1,6 @@
 import { icon } from "#functions";
 import { settings } from "#settings";
-import { createEmbed, createRow } from "@magicyan/discord";
+import { createEmbed, createRow, EmbedPropery } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, inlineCode } from "discord.js";
 
 interface ResourcesEditMenuProps {
@@ -13,13 +13,14 @@ interface ResourcesEditMenuProps {
     tags?: string[];
     authorId: string;
     messageId: string;
+    author: EmbedPropery<"author">
 }
 export function resourcesEditMenu(props: ResourcesEditMenuProps){
-    const { category, authorId, messageId, tags=[], ...info } = props;
+    const { category, authorId, author, messageId, tags=[], ...info } = props;
     const { title, description, url, banner, thumbnail } = info;
     
     const embed = createEmbed({
-        color: settings.colors.warning,
+        author, color: settings.colors.warning,
         title, description, url,
         thumbnail: thumbnail,
         image: banner,

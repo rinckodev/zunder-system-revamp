@@ -2,7 +2,7 @@ import { Command } from "#base";
 import { icon } from "#functions";
 import { settings } from "#settings";
 import { brBuilder, createEmbed } from "@magicyan/discord";
-import { ApplicationCommandType, hyperlink } from "discord.js";
+import { ApplicationCommandType, hyperlink, version as djsVersion } from "discord.js";
 
 new Command({
 	name: "informações",
@@ -17,8 +17,11 @@ new Command({
 			thumbnail: guild.iconURL(),
 			description: brBuilder(
 				`# ${icon("book")} Informações`,
+				"Bot de sistemas da comunidade Zunder",
 				"",
-				`Bot desenvolvido por ${hyperlink("Rincko Dev", "https://github.com/rinckodev")}`,
+				`- Bot desenvolvido por ${hyperlink("Rincko Dev", "https://github.com/rinckodev")}`,
+				`- Versão do discord.js: \`${djsVersion}\``,	
+				`- Versão do NodeJs: \`${process.versions.node}\``,	
 			),
 			footer: {
 				text: guild.name,

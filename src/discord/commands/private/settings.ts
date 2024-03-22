@@ -10,6 +10,7 @@ new Command({
     name: "configurações",
     description: "Painel de configurações.",
     dmPermission: false,
+    defaultMemberPermissions: ["Administrator"],
     type: ApplicationCommandType.ChatInput,
     options: [
         {

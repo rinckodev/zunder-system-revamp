@@ -18,20 +18,21 @@
     "@magicyan/canvas": "^0.0.10",
     "@magicyan/discord": "^1.0.22",
     "@magicyan/discord-events": "^1.0.13",
-    "@magicyan/discord-ui": "^0.0.3",
+    "@magicyan/discord-ui": "^0.0.7",
     "chalk": "^5.3.0",
     "consola": "^3.2.3",
     "discord.js": "^14.14.1",
     "fast-glob": "^3.3.2",
-    "mongoose": "^8.2.0"
+    "mongoose": "^8.2.3",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "^20.11.24",
+    "@types/node": "^20.11.30",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.57.0",
     "tsx": "^4.7.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.3"
   },
   "imports": {
     "#base": [
