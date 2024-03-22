@@ -8,13 +8,16 @@ import { ApplicationCommandOptionType, ApplicationCommandType, formatEmoji, user
 
 new Command({
     name: "manage",
+    nameLocalizations: { "pt-BR": "gerenciar" },
     description: "manage command",
+    descriptionLocalizations: { "pt-BR": "🧰 Comando de gerenciar" },
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     options: [
         {
             name: "nicks",
             description: "manage zunder nicks",
+            descriptionLocalizations: { "pt-BR": "Gerenciar nicks da Zunder" },
             type: ApplicationCommandOptionType.Subcommand,
         }
     ],

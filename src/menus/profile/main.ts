@@ -2,7 +2,7 @@ import { MemberSchema } from "#database";
 import { icon } from "#functions";
 import { settings } from "#settings";
 import { brBuilder, captalize, createEmbed, createEmbedAuthor, createRow } from "@magicyan/discord";
-import { ButtonBuilder, ButtonStyle, GuildMember, formatEmoji } from "discord.js";
+import { ButtonBuilder, ButtonStyle, GuildMember, formatEmoji, italic } from "discord.js";
 
 export function profileMainMenu(executorId: string, member: GuildMember, memberData: MemberSchema){
     const { rank } = memberData;
@@ -19,6 +19,8 @@ export function profileMainMenu(executorId: string, member: GuildMember, memberD
             `> 🏷️ Nick: \` ${rank.nick} \``,
             `> Dispositivo: ${captalize(rank.device)}`,
             `> Tipo: ${formatEmoji(rankTypeIcon)} ${captalize(rank.type)}`,
+            "",
+            italic("🚧 Mais coisas em breve...")
         )
     });
 
@@ -26,12 +28,12 @@ export function profileMainMenu(executorId: string, member: GuildMember, memberD
         new ButtonBuilder({
             customId: `profile/refresh/${member.id}`, 
             emoji: "📡", 
-            style: ButtonStyle.Success
+            style: ButtonStyle.Secondary
         }),
         new ButtonBuilder({
             customId: `profile/settings/${member.id}`, 
             emoji: icon("gear"), 
-            style: ButtonStyle.Primary,
+            style: ButtonStyle.Secondary,
             disabled: executorId !== member.id
         }),
     );

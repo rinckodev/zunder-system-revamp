@@ -29,6 +29,12 @@ new Component({
                 );
                 return;
             }
+            case "settings":{
+                interaction.followUp({ ephemeral,
+                    content: "🚧 Isso está em desenvolvimento..."
+                });
+                return;
+            }
         }
     },
 });

@@ -7,133 +7,171 @@ import { brBuilder, createEmbed, notFound } from "@magicyan/discord";
 import { ApplicationCommandOptionType, ApplicationCommandType, ChannelType, inlineCode, roleMention } from "discord.js";
 
 new Command({
-    name: "configurações",
-    description: "Painel de configurações.",
+    name: "settings",
+    nameLocalizations: { "pt-BR": "configurações" },
+    description: "Settings panel",
+    descriptionLocalizations: { "pt-BR": "Painel de configurações." },
     dmPermission: false,
     defaultMemberPermissions: ["Administrator"],
     type: ApplicationCommandType.ChatInput,
     options: [
         {
-            name: "painel",
-            description: "painel de configurações",
+            name: "panel",
+            nameLocalizations: { "pt-BR": "painel" },
+            description: "Settings panel",
+            descriptionLocalizations: { "pt-BR": "Painel de configurações" },
             type: ApplicationCommandOptionType.SubcommandGroup,
             options: [
                 {
-                    name: "exibir",
-                    description: "Exibir o painel",
+                    name: "show",
+                    nameLocalizations: { "pt-BR": "exibir" },
+                    description: "Exibir o painel de configurações",
+                    descriptionLocalizations: { "pt-BR": "Show settings panel" },
                     type: ApplicationCommandOptionType.Subcommand,
                 }
             ]
         },
         {
-            name: "recursos",
-            description: "configurações de recursos",
+            name: "resources",
+            nameLocalizations: { "pt-BR": "recursos" },
+            description: "Resources settings (temp)",
+            descriptionLocalizations: { "pt-BR": "Configurações de recursos (temp)" },
             type: ApplicationCommandOptionType.SubcommandGroup,
             options: [
                 {
-                    name: "listar",
-                    description: "Lista as categorias de recurso",
+                    name: "list",
+                    nameLocalizations: { "pt-BR": "listar" },
+                    description: "List resource categories",
+                    descriptionLocalizations: { "pt-BR": "Lista as categorias de recurso" },
                     type: ApplicationCommandOptionType.Subcommand,
                 },
                 {
-                    name: "criar",
-                    description: "Cria uma nova categoria de recurso",
+                    name: "create",
+                    nameLocalizations: { "pt-BR": "criar" },
+                    description: "Create a new resource category",
+                    descriptionLocalizations: { "pt-BR": "Cria uma nova categoria de recurso" },
                     type: ApplicationCommandOptionType.Subcommand,
                     options: [
                         {
                             name: "id",
-                            description: "Id da categoria",
+                            description: "Category id",
+                            descriptionLocalizations: { "pt-BR": "Id da categoria" },
                             type: ApplicationCommandOptionType.String,
                             required,
                         },
                         {
                             name: "title",
-                            description: "Título da categoria",
+                            nameLocalizations: { "pt-BR": "título" },
+                            description: "Category title",
+                            descriptionLocalizations: { "pt-BR": "Título da categoria" },
                             type: ApplicationCommandOptionType.String,
                             required,
                         },
                         {
                             name: "description",
-                            description: "Descrição da categoria",
+                            nameLocalizations: { "pt-BR": "descrição" },
+                            description: "Category description",
+                            descriptionLocalizations: { "pt-BR": "Descrição da categoria" },
                             type: ApplicationCommandOptionType.String,
                             required,
                         },
                         {
                             name: "channel",
-                            description: "Canal da categoria",
+                            nameLocalizations: { "pt-BR": "canal" },
+                            description: "Category channel",
+                            descriptionLocalizations: { "pt-BR": "Canal da categoria" },
                             type: ApplicationCommandOptionType.Channel,
                             channelTypes: [ChannelType.GuildText],
                             required,
                         },
                         {
                             name: "emoji",
-                            description: "Emoji da categoria",
+                            description: "Category emoji",
+                            descriptionLocalizations: { "pt-BR": "Emoji da categoria" },
                             type: ApplicationCommandOptionType.String,
                         },
                         {
                             name: "role",
-                            description: "Cargo da categoria",
+                            nameLocalizations: { "pt-BR": "cargo" },
+                            description: "Category role",
+                            descriptionLocalizations: { "pt-BR": "Cargo da categoria" },
                             type: ApplicationCommandOptionType.Role,                            
                         },
                         {
                             name: "tags",
-                            description: "Tags da categoria (separe por vírgula)",
+                            description: "Category roles (separate by comma)",
+                            descriptionLocalizations: { "pt-BR": "Tags da categoria (separe por vírgula)" },
                             type: ApplicationCommandOptionType.String,                            
                         },
                     ]
                 },
                 {
-                    name: "editar",
+                    name: "edit",
+                    nameLocalizations: { "pt-BR": "editar" },
                     description: "Edita uma categoria de recurso",
                     type: ApplicationCommandOptionType.Subcommand,
                     options: [
                         {
                             name: "id",
-                            description: "Id da categoria",
+                            description: "Category id",
+                            descriptionLocalizations: { "pt-BR": "Id da categoria" },
                             type: ApplicationCommandOptionType.String,
                             required,
                         },
                         {
                             name: "title",
-                            description: "Título da categoria",
+                            nameLocalizations: { "pt-BR": "título" },
+                            description: "Category title",
+                            descriptionLocalizations: { "pt-BR": "Título da categoria" },
                             type: ApplicationCommandOptionType.String,
                         },
                         {
                             name: "description",
-                            description: "Descrição da categoria",
+                            nameLocalizations: { "pt-BR": "descrição" },
+                            description: "Category description",
+                            descriptionLocalizations: { "pt-BR": "Descrição da categoria" },
                             type: ApplicationCommandOptionType.String,
                         },
                         {
                             name: "channel",
-                            description: "Canal da categoria",
+                            nameLocalizations: { "pt-BR": "canal" },
+                            description: "Category channel",
+                            descriptionLocalizations: { "pt-BR": "Canal da categoria" },
                             type: ApplicationCommandOptionType.Channel,
                             channelTypes: [ChannelType.GuildText],
                         },
                         {
                             name: "emoji",
-                            description: "Emoji da categoria",
+                            description: "Category emoji",
+                            descriptionLocalizations: { "pt-BR": "Emoji da categoria" },
                             type: ApplicationCommandOptionType.String,
                         },
                         {
                             name: "role",
-                            description: "Cargo da categoria",
+                            nameLocalizations: { "pt-BR": "cargo" },
+                            description: "Category role",
+                            descriptionLocalizations: { "pt-BR": "Cargo da categoria" },
                             type: ApplicationCommandOptionType.Role,                            
                         },
                         {
                             name: "tags",
-                            description: "Tags da categoria (separe por vírgula)",
-                            type: ApplicationCommandOptionType.String,                            
+                            description: "Category roles (separate by comma)",
+                            descriptionLocalizations: { "pt-BR": "Tags da categoria (separe por vírgula)" },
+                            type: ApplicationCommandOptionType.String,                       
                         },
                     ]
                 },
                 {
-                    name: "deletar",
-                    description: "Deleta uma categoria de recurso",
+                    name: "delete",
+                    nameLocalizations: { "pt-BR": "deletar" },
+                    description: "Delete a resource category",
+                    descriptionLocalizations: { "pt-BR": "Deleta uma categoria de recurso" },
                     type: ApplicationCommandOptionType.Subcommand,
                     options: [
                         {
                             name: "id",
-                            description: "Id da categoria",
+                            description: "Category id",
+                            descriptionLocalizations: { "pt-BR": "Id da categoria" },
                             type: ApplicationCommandOptionType.String,
                             required,
                         },
@@ -147,11 +185,11 @@ new Command({
         const group = options.getSubcommandGroup(true);
         const subcommand = options.getSubcommand(true);
         switch(group){
-            case "painel":{
+            case "panel":{
                 interaction.reply(menus.settings.main(guild));
                 return;
             }
-            case "recursos":{
+            case "resources":{
                 await interaction.deferReply({ ephemeral });
 
                 const guildData = await db.guilds.get(guild.id);
@@ -159,7 +197,7 @@ new Command({
                 const length = categories.length;
 
                 switch(subcommand){
-                    case "listar":{
+                    case "list":{
                         const display = categories.map(
                             ({ id, title, emoji, channel, role, tags }) => ({
                                 name: id,
@@ -181,7 +219,7 @@ new Command({
                         interaction.editReply({ embeds: [embed] });
                         return;
                     }
-                    case "criar":{
+                    case "create":{
                         const id = options.getString("id", true);
                         
                         if (categories.some(c => c.id === id)){
@@ -211,7 +249,7 @@ new Command({
                         interaction.editReply({ embeds: [embed] });
                         return;
                     }
-                    case "editar":{
+                    case "edit":{
                         const id = options.getString("id", true);
                         
                         const category = categories.find(c => c.id === id); 
@@ -245,7 +283,7 @@ new Command({
                         interaction.editReply({ embeds: [embed] });
                         return;
                     }
-                    case "deletar":{
+                    case "delete":{
                         const id = options.getString("id", true);
                         if (!categories.some(c => c.id !== id)){
                             const embed = embedChat("danger", `${icon("cancel")} Não foi encontrada uma categoria de recurso com o id \`${id}\``);
