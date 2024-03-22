@@ -18,6 +18,9 @@ export const settingsChannelsSelectOptions = [
     
     { emoji: "📃", label: "Logs", value: "logs", description: "Canal de logs mais detalhados" },
     { emoji: "📋", label: "Auditoria", value: "audit", description: "Onde fica registrado as atividades dos membros" },
+    
+    { emoji: "👋", label: "Apresentações", value: "presentations", description: "Canal de apresentações de novos membros" },
+    { emoji: "📷", label: "Instaplay", value: "instaplay", description: "Canal para compartilhar clips e imagens da gameplay" },
 ] as const;
 
 export function settingsChannelsMenu(guildData: GuildSchema){

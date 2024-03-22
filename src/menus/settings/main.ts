@@ -1,7 +1,7 @@
 import { icon } from "#functions";
 import { settings } from "#settings";
 import { brBuilder, createEmbed, createRow } from "@magicyan/discord";
-import { Guild, StringSelectMenuBuilder, userMention } from "discord.js";
+import { ButtonBuilder, ButtonStyle, Guild, userMention } from "discord.js";
 
 export function settingsMainMenu(guild: Guild){
     const embeds = createEmbed({
@@ -22,19 +22,15 @@ export function settingsMainMenu(guild: Guild){
 
 
     const row = createRow(
-        new StringSelectMenuBuilder({
-            customId: "menu/settings/main",
-            placeholder: "Selecione o que deseja configurar",
-            options: [
-                { 
-                    label: "Canais", value: "channels", 
-                    emoji: "🔊", description: "Configurar canais" 
-                },
-                { 
-                    label: "Ranks", value: "ranks", emoji: icon("account"), 
-                    description: "Configurar cargos de ranks" 
-                }
-            ]
+        new ButtonBuilder({
+            customId: "menu/settings/channels",
+            label: "Canais", emoji: "🔊",
+            style: ButtonStyle.Secondary 
+        }),
+        new ButtonBuilder({
+            customId: "menu/settings/ranks",
+            label: "Ranks", emoji: icon("account"),
+            style: ButtonStyle.Secondary 
         })
     );
 

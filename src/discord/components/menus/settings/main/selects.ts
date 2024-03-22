@@ -13,25 +13,6 @@ new Component({
         const guildData = await db.guilds.get(guild.id);
         
         switch(menu){
-            case "main":{
-                
-                switch(selected){
-                    case "channels":{
-                        interaction.editReply(menus.settings.channels.menu(guildData));
-                        return;
-                    }
-                    case "ranks":{
-                        interaction.editReply(menus.settings.ranks.menu(guild));
-                        return;
-                    }
-                    case "resources":{
-                        // TODO add menu
-                        return;
-                    }
-                }
-                
-                return;
-            }
             case "channels":{
                 interaction.editReply(menus.settings.channels.submenu(guildData, selected));
                 return;

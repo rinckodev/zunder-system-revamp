@@ -31,7 +31,9 @@ export const guildSchema = new Schema(
             management: t.channel,
             records: t.channel,
             audit: t.channel,
-            party: t.channel
+            party: t.channel,
+            presentations: t.channel,
+            instaplay: t.channel,
         },
         ranks: {
             levels: {
