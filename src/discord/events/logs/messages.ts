@@ -39,12 +39,13 @@ new Event({
         if (guild.id !== process.env.MAIN_GUILD_ID) return;
         if (author.id === client.user.id) return;
         if (author.id === guild.ownerId) return;
+        if (oldMessage.content === newMessage.content) return;
     
         sendGuildLog({
-            icon: "🗑️", guild,
+            icon: "✏️", guild,
             details: brBuilder(
                 `**@${author.username}** editou uma mensagem em ${channelMention(channel.id)}`,
-                `> ➜ : ${inlineCode(oldMessage.content ?? "")}`,
+                `> ${icon("message")} : ${inlineCode(oldMessage.content ?? "")}`,
                 `> ${icon("pencil")} : ${inlineCode(newMessage.content)} `,
             ),
         });

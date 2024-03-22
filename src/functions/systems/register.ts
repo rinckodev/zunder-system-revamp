@@ -34,7 +34,7 @@ export async function autoRegister(member: GuildMember){
     const isRegistered = await db.members.hasRegister(member);
     const memberData = await db.members.get(member);
 
-    autoGiveRoles(member, memberData);
+    await autoGiveRoles(member, memberData);
 
     if (!isRegistered){
         sendGuildRecord({
@@ -45,7 +45,7 @@ export async function autoRegister(member: GuildMember){
                 `${icon("check")} Registrado como membro discord`,
                 `- Nick: \`${member.user.username}\``
             ),
-            executor: member.client, target: member,
+            executor: member.client, target: await member.fetch(),
         });
         return;
     }

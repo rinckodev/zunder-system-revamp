@@ -9,7 +9,8 @@ new Event({
     event: "messageCreate",
     async run(message) {
         if (!message.inGuild() || message.guild.id !== process.env.MAIN_GUILD_ID) return;
-    
+        if (message.author.bot) return;
+
         const channel = message.channel;
         const { channels } = await db.guilds.get(message.guild.id);
         
