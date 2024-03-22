@@ -190,6 +190,8 @@ new Component({
                             const embed = embedChat("success", `${icon("check")} Recurso enviado com sucesso! Confira: ${message.url}`);
                             interaction.editReply({ embeds: [embed] });
                         
+                            await message.react("❤️");
+                            await message.react("🔥");
                             await message.react("👍");
                             await message.react("👎");
 
