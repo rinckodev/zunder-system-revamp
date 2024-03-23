@@ -133,12 +133,12 @@ new Component({
                 }
                 
                 const fields: EmbedPropery<"fields"> = [
-                    { name: "Categoria", value: `${category.emoji} ${category.title}`, inline }
+                    { name: "Categoria", value: `${category.emoji} ${category.title}` }
                 ];
                 
                 if (tags && tags.length >= 1){
                     fields.push({
-                        name: "Tags", value: tags.map(inlineCode).join(", "), inline
+                        name: "Tags", value: tags.map(inlineCode).join(", ")
                     });
                 }
 
@@ -305,18 +305,16 @@ new Modal({
 
                 if (resourceInfo.tags && resourceInfo.tags.length > 1){
                     const tagsIndex = embedFields.findIndex(f => f.name === "Tags");
+                    const field = {
+                        name: "Tags",
+                        value: resourceInfo.tags.map(inlineCode).join(", "), 
+                    };
                     if (tagsIndex !== -1){
-                        embedFinal.spliceFields(tagsIndex, 1, {
-                            name: "Tags", inline,
-                            value: resourceInfo.tags.map(inlineCode).join(", "), 
-                        });
+                        embedFinal.spliceFields(tagsIndex, 1, field);
                     } else {
                         const lastIndex = embedFields.length-1;
                         const authorField = embedFinal.fields[lastIndex];
-                        embedFinal.spliceFields(tagsIndex, lastIndex, {
-                            name: "Tags", inline,
-                            value: resourceInfo.tags.map(inlineCode).join(", "), 
-                        }, authorField);
+                        embedFinal.spliceFields(tagsIndex, lastIndex, field, authorField);
                     }
                 }
 
