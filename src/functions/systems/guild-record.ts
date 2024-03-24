@@ -1,4 +1,3 @@
-import { db } from "#database";
 import { settings } from "#settings";
 import { EmbedPropery, brBuilder, createEmbed, findChannel } from "@magicyan/discord";
 import { Attachment, AttachmentBuilder, Client, Guild, GuildMember, User } from "discord.js";
@@ -16,7 +15,7 @@ interface GuildRecordOptions {
 }
 export async function sendGuildRecord(options: GuildRecordOptions){
     const { guild, thumbnail, author, details, executor, color="primary", files, target, title } = options;
-    const { channels={} } = await db.guilds.get(guild.id);
+    const { channels={} } = guild.client.mainGuildData;
 
     const channel = findChannel(guild).byId(channels?.records?.id ?? "");
     if (!channel) return false;

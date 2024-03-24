@@ -1,5 +1,4 @@
 import { Component } from "#base";
-import { db } from "#database";
 import { menus } from "#menus";
 import { ComponentType } from "discord.js";
 
@@ -7,11 +6,12 @@ new Component({
     customId: "menu/settings/:menu/:[args]",
     type: ComponentType.ActionRow, cache: "cached",
     async run(interaction, { menu, args }) {
-        const { guild } = interaction;
+        const { guild, client } = interaction;
+        
+        const guildData = client.mainGuildData; 
         
         if (interaction.isChannelSelectMenu()){
             await interaction.deferUpdate();
-            const guildData = await db.guilds.get(guild.id);
             
             const [selectedChannelId] = interaction.values;
             
@@ -32,7 +32,6 @@ new Component({
             switch(menu){
                 case "ranks":{
                     await interaction.deferUpdate();
-                    const guildData = await db.guilds.get(guild.id);
 
                     const [selectedItem] = interaction.values;
                     
@@ -58,8 +57,6 @@ new Component({
 
         if (interaction.isRoleSelectMenu()){
             await interaction.deferUpdate();
-            const guildData = await db.guilds.get(guild.id);
-            
             const [selectedRoleId] = interaction.values;
 
             switch(menu){

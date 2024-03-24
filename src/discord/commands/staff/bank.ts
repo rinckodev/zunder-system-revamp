@@ -62,7 +62,7 @@ new Command({
         }
     ],
     async run(interaction) {
-        const { member, guild, options } = interaction;
+        const { member, guild, client, options } = interaction;
 
         await interaction.deferReply({ ephemeral });
 
@@ -80,7 +80,7 @@ new Command({
             return;
         }
 
-        const guildData = await db.guilds.get(guild.id);
+        const guildData = client.mainGuildData;
         const bankChannel = findChannel(guild).byId(guildData.channels?.bank?.id ?? "");
 
         if (!bankChannel) {

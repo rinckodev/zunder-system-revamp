@@ -1,6 +1,6 @@
 import { Command, Store } from "#base";
 import { db } from "#database";
-import { embedChat, findResource, getResourceInfo, icon } from "#functions";
+import { embedChat, findResource, getResourceInfo, icon, isUrl } from "#functions";
 import { menus } from "#menus";
 import { brBuilder, createRow, spaceBuilder } from "@magicyan/discord";
 import { confirm } from "@magicyan/discord-ui";
@@ -121,21 +121,26 @@ export const resourceCommand = new Command({
 
         switch(subcommand){
             case "create":{
-                
                 const title = options.getString("title");
                 const description = options.getString("description");
-                const url = options.getString("url");
+                const url = options.getString("url")??"";
                 const banner = options.getAttachment("banner");
                 const thumbnail = options.getAttachment("thumbnail");
 
                 if (banner) banner.name = "image.png";
                 if (thumbnail) thumbnail.name = "thumbnail.png";
 
-                interaction.reply(menus.resources.create(member, {
-                    title, description, url, 
+                await interaction.reply(menus.resources.create(member, {
+                    title, description, 
+                    url: isUrl(url) ? url : undefined, 
                     banner: banner?.url, 
                     thumbnail: thumbnail?.url
                 }));
+
+                if (!isUrl(url)){
+                    const embed = embedChat("danger", `${icon("cancel")} A url enviada não é válida!`);
+                    interaction.followUp({ ephemeral, embeds: [embed] });
+                }
 
                 if (banner || thumbnail) {
                     now.setSeconds(now.getSeconds() + 40);

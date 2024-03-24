@@ -1,5 +1,4 @@
 import { Command } from "#base";
-import { db } from "#database";
 import { embedChat, icon } from "#functions";
 import { menus } from "#menus";
 import { settings } from "#settings";
@@ -181,7 +180,7 @@ new Command({
         },
     ],
     async run(interaction){
-        const { options, guild } = interaction;
+        const { options, guild, client } = interaction;
         const group = options.getSubcommandGroup(true);
         const subcommand = options.getSubcommand(true);
         switch(group){
@@ -192,7 +191,7 @@ new Command({
             case "resources":{
                 await interaction.deferReply({ ephemeral });
 
-                const guildData = await db.guilds.get(guild.id);
+                const guildData = client.mainGuildData;
                 const categories = guildData.resources?.categories!;
                 const length = categories.length;
 

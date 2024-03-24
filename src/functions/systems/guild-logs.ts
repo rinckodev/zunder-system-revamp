@@ -1,4 +1,3 @@
-import { db } from "#database";
 import { findChannel, spaceBuilder } from "@magicyan/discord";
 import { Attachment, AttachmentBuilder, Embed, Guild, time } from "discord.js";
 
@@ -11,7 +10,7 @@ interface GuildLogOptions {
 }
 export async function sendGuildLog(options: GuildLogOptions){
     const { guild, details, icon, files, embeds } = options;
-    const { channels={} } = await db.guilds.get(guild.id);
+    const { channels={} } = guild.client.mainGuildData; 
 
     const channel = findChannel(guild).byId(channels?.logs?.id ?? "");
     if (!channel) return false;

@@ -1,5 +1,4 @@
 import { Component } from "#base";
-import { db } from "#database";
 import { menus } from "#menus";
 import { ComponentType } from "discord.js";
 
@@ -7,10 +6,10 @@ new Component({
     customId: "menu/settings/:menu",
     type: ComponentType.Button, cache: "cached",
     async run(interaction, { menu }) {
-        const { guild } = interaction;
+        const { guild, client } = interaction;
         
         await interaction.deferUpdate();
-        const guildData = await db.guilds.get(guild.id);
+        const guildData = client.mainGuildData;
         
         switch(menu){
             case "main":{

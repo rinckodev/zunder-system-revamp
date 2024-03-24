@@ -26,7 +26,7 @@ new Command({
     },
     type: ApplicationCommandType.ChatInput,
     async run(interaction, { cooldowns }){
-        const { options, member, guild } = interaction;
+        const { options, member, guild, client } = interaction;
 
         await interaction.deferReply({ ephemeral });
 
@@ -46,7 +46,7 @@ new Command({
             return;
         }
 
-        const guildData = await db.guilds.get(guild.id);
+        const guildData = client.mainGuildData;
 
         const managementChannel = findChannel(guild).byId(guildData?.channels?.management?.id ?? "");
         if (!managementChannel){

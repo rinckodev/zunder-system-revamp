@@ -8,7 +8,7 @@ new Component({
     customId: "register/manage/:mentionId/:nick/:action",
     type: ComponentType.Button, cache: "cached",
     async run(interaction, { action, nick, mentionId }) {
-        const { member, message: { embeds: [messageEmbed] }, guild } = interaction;
+        const { member, message: { embeds: [messageEmbed] }, client, guild } = interaction;
         
         const embeds = [
             createEmbed({ extend: messageEmbed.data })
@@ -34,7 +34,7 @@ new Component({
             return;
         }
 
-        const { ranks } = await db.guilds.get(guild.id);
+        const { ranks } = client.mainGuildData; 
                 
         const zunderRankTypeRole = findRole(guild).byId(ranks?.types?.zunder?.id ?? "");
         const discordRankTypeRole = findRole(guild).byId(ranks?.types?.discord?.id ?? "");

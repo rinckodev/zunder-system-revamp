@@ -1,5 +1,4 @@
 import { Event } from "#base";
-import { db } from "#database";
 import { deleteMessage, embedChat } from "#functions";
 import { brBuilder, createLinkButton, createRow } from "@magicyan/discord";
 import { codeBlock } from "discord.js";
@@ -12,7 +11,7 @@ new Event({
         if (message.author.bot) return;
 
         const channel = message.channel;
-        const { channels } = await db.guilds.get(message.guild.id);
+        const { channels } = message.client.mainGuildData;
         
         switch(channel.id){
             case channels?.presentations?.id:{

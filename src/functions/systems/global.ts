@@ -23,7 +23,8 @@ export async function createCard(options: CreateCardOptions){
     const dx = 58;
     const dy = 30;
     const radius = 180/2;
-    const avatar = await Canvas.loadImage(member.displayAvatarURL({ size: 512 }));
+    const avatar = await Canvas.loadImage(member.displayAvatarURL({ size: 512 }))
+    .catch(() => Canvas.loadImage(rootTo("assets/images/avatar-fallback.png")));
     context.beginPath();
     context.arc(dx + radius, dy + radius, radius, 0, Math.PI * 2);
     context.clip();
@@ -36,10 +37,7 @@ export async function createCard(options: CreateCardOptions){
 
     context.drawImage(icon, { dx: 188, dy: 160 });
     
-    context.font.set({
-        size: 20,
-        family: "JetBrainsMono Nerd Font"
-    });
+    context.font.set({ size: 20, family: "JetBrainsMono Nerd Font" });
 
     const actionBadgeOptions = action === "join"
     ? { color: "#38FF70", background: "#1A8337", text: "Acabou de entrar", }

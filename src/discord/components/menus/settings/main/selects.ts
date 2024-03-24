@@ -1,5 +1,4 @@
 import { Component } from "#base";
-import { db } from "#database";
 import { menus } from "#menus";
 import { ComponentType } from "discord.js";
 
@@ -7,11 +6,11 @@ new Component({
     customId: "menu/settings/:menu",
     type: ComponentType.StringSelect, cache: "cached",
     async run(interaction, { menu }) {
-        const { values: [selected], guild } = interaction;
+        const { values: [selected], guild, client } = interaction;
         
         await interaction.deferUpdate();
-        const guildData = await db.guilds.get(guild.id);
-        
+        const guildData = client.mainGuildData;
+
         switch(menu){
             case "channels":{
                 interaction.editReply(menus.settings.channels.submenu(guildData, selected));

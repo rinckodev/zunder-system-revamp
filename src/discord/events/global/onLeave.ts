@@ -1,5 +1,4 @@
 import { Event } from "#base";
-import { db } from "#database";
 import { createCard } from "#functions";
 import { findChannel } from "@magicyan/discord";
 import chalk from "chalk";
@@ -9,9 +8,9 @@ new Event({
     name: chalk.reset(`${chalk.bgHex("#5444a5").black(" Global ")} Leave server`),
     event: "guildMemberRemove",
     async run(member) {
-        const { guild } = member;
+        const { guild, client } = member;
 
-        const { channels } = await db.guilds.get(guild.id);
+        const { channels } = client.mainGuildData; 
 
         const globalChannel = findChannel(guild).byId(channels?.global?.id ?? "");
         if (!globalChannel) return;    

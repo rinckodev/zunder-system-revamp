@@ -9,6 +9,7 @@ new Command({
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     defaultMemberPermissions: ["Administrator"],
+    global: true,
     options: [
         {
             name: "servidor",

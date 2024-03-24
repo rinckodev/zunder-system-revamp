@@ -20,7 +20,7 @@ function getRankRoles(guild: Guild, guildData: GuildSchema, memberData: MemberSc
 }
 
 export async function autoGiveRoles(member: GuildMember, memberData: MemberSchema){
-    const guildData = await db.guilds.get(member.guild.id);
+    const guildData = member.client.mainGuildData;
 
     const { rankTypeRole, rankRole } = getRankRoles(member.guild, guildData, memberData);
     if (!rankTypeRole || !rankRole) return;
@@ -53,7 +53,7 @@ export async function autoRegister(member: GuildMember){
 
 export async function closeZunderRegister(executor: GuildMember, member: GuildMember){
     const memberData = await db.members.get(member);
-    const guildData = await db.guilds.get(member.guild.id);
+    const guildData = member.client.mainGuildData;
     
     const { rankTypeRole: oldRole } = getRankRoles(member.guild, guildData, memberData);
 

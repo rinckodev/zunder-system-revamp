@@ -9,9 +9,9 @@ new Event({
     name: chalk.reset(`${chalk.bgHex("#5444a5").black(" Global ")} Join server`),
     event: "guildMemberAdd",
     async run(member) {
-        const { guild } = member;
+        const { guild, client } = member;
 
-        const { channels } = await db.guilds.get(guild.id);
+        const { channels } = client.mainGuildData; 
         
         const globalChannel = findChannel(guild).byId(channels?.global?.id ?? "");
         if (!globalChannel) return;

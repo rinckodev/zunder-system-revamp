@@ -22,7 +22,7 @@ type CommandProps<N extends string, D extends boolean, T extends ApplicationComm
 type CommandStore = Record<string | number, Store<any, any>>;
 
 type CommandData<N extends string, D extends boolean, T extends ApplicationCommandType, S extends CommandStore> = {
-	name: N; dmPermission: D; type: T; store?: S;  
+	name: N; dmPermission: D; type: T; store?: S; global?:boolean;
 } & CommandProps<N, D, T, S>
 
 export class Command<N extends string, D extends boolean, T extends ApplicationCommandType, S extends CommandStore> {
