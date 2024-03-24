@@ -1,10 +1,9 @@
 import { Schema } from "mongoose";
 import { t } from "../utils.js";
+import { GuildMember } from "discord.js";
 
-interface GetGuildMember {
-    id: string,
-    guild: { id: string },
-    displayName?: string
+type GetGuildMember = Pick<GuildMember, "id" | "guild"> & {
+    user?: Pick<GuildMember["user"], "username">
 }
 
 const rankSchema = new Schema({
@@ -35,7 +34,7 @@ export const memberSchema = new Schema(
                 const query = { id: member.id, guildId: member.guild.id };
                 return await this.findOne(query) ?? this.create({
                     ...query, rank: {
-                        nick: member.displayName ?? "Sem nick",
+                        nick: member.user?.username ?? "Sem nick",
                         device: "discord", type: "discord",
                         level: 1  
                     }

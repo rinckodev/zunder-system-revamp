@@ -10,9 +10,9 @@ interface GuildLogOptions {
 }
 export async function sendGuildLog(options: GuildLogOptions){
     const { guild, details, icon, files, embeds } = options;
-    const { channels={} } = guild.client.mainGuildData; 
+    const { channels } = guild.client.mainGuildData; 
 
-    const channel = findChannel(guild).byId(channels?.logs?.id ?? "");
+    const channel = findChannel(guild).byId(channels.logs?.id ?? "");
     if (!channel) return false;
 
     const text = [time(new Date(), "t"), icon, details].filter(Boolean) as string[];

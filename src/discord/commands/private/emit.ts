@@ -45,7 +45,6 @@ new Command({
                 interaction.reply({ ephemeral, content: "Event emited!" });
                 const member = options.getMember("member")!;
                 client.emit("guildMemberAdd", member);
-
                 return;
             }
             case "guildmemberremove":{

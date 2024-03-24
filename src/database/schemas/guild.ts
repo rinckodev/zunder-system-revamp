@@ -15,6 +15,21 @@ const resourceCategory = new Schema({
 
 }, { _id: false });
 
+const guildChannels = new Schema({
+    logs: t.channel,
+    general: t.channel,
+    global: t.channel,
+    announcement: t.channel,
+    bank: t.channel,
+    terms: t.channel,
+    management: t.channel,
+    records: t.channel,
+    audit: t.channel,
+    party: t.channel,
+    presentations: t.channel,
+    instaplay: t.channel,
+}, { _id: false });
+
 export const guildSchema = new Schema(
     {
         id: t.string,
@@ -22,18 +37,8 @@ export const guildSchema = new Schema(
             total: { type: Number, default: 0 }
         },
         channels: {
-            logs: t.channel,
-            general: t.channel,
-            global: t.channel,
-            announcement: t.channel,
-            bank: t.channel,
-            terms: t.channel,
-            management: t.channel,
-            records: t.channel,
-            audit: t.channel,
-            party: t.channel,
-            presentations: t.channel,
-            instaplay: t.channel,
+            type: guildChannels,
+            default: {}
         },
         ranks: {
             levels: {

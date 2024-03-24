@@ -7,8 +7,8 @@ import { sendGuildRecord } from "./guild-record.js";
 function getRankRoles(guild: Guild, guildData: GuildSchema, memberData: MemberSchema){
     const { ranks } = guildData;
 
-    const rankLevel = memberData?.rank?.level ?? 1;
-    const rankType = memberData?.rank?.type ?? "discord";
+    const rankLevel = memberData.rank.level;
+    const rankType = memberData.rank.type;
     
     const rankTypeRoleId = ranks?.types?.[rankType]?.id ?? "";
     const rankRoleId = ranks?.levels?.[rankLevel]?.id ?? "";

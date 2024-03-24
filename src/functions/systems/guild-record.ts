@@ -15,9 +15,9 @@ interface GuildRecordOptions {
 }
 export async function sendGuildRecord(options: GuildRecordOptions){
     const { guild, thumbnail, author, details, executor, color="primary", files, target, title } = options;
-    const { channels={} } = guild.client.mainGuildData;
+    const { channels } = guild.client.mainGuildData;
 
-    const channel = findChannel(guild).byId(channels?.records?.id ?? "");
+    const channel = findChannel(guild).byId(channels.records?.id ?? "");
     if (!channel) return false;
 
     const footerText = "Administração Zunder";
