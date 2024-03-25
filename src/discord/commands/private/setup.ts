@@ -24,7 +24,21 @@ new Command({
                     required
                 }
             ]
-        }
+        },
+        {
+            name: "informations",
+            description: "setup informations message",
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: "channel",
+                    description: "Select channel",
+                    type: ApplicationCommandOptionType.Channel,
+                    channelTypes: [ChannelType.GuildText],
+                    required
+                }
+            ]
+        },
     ],
     async run(interaction){
         const { options, guild } = interaction;
@@ -53,6 +67,31 @@ new Command({
                             `${icon("check")} Se não pode ajudar, não atrapalhe.`    
                         )},                    
                     ],
+                    footer: {
+                        text: guild.name,
+                        iconURL: guild.iconURL()
+                    }
+                });
+
+                channel.send({ embeds: [embed] })
+                .then(message => {
+                    message.react(icon("check").id);
+                
+                    const embed = embedChat("success", `${icon("check")} Mensagem enviada com sucesso! ${message.url}`);
+                    interaction.reply({ ephemeral, embeds: [embed] });
+                })
+                .catch(err => {
+                    const embed = embedChat("danger", `${icon("cancel")} Não foi possível enviar a mensagem! ${codeBlock(err)}`);
+                    interaction.reply({ ephemeral, embeds: [embed] }); 
+                });
+                return;
+            }
+            case "informations":{
+                const channel = options.getChannel("channel", true, [ChannelType.GuildText]);
+
+                const embed = createEmbed({
+                    color: settings.colors.info,
+                    description: "", // TODO add description
                     footer: {
                         text: guild.name,
                         iconURL: guild.iconURL()
