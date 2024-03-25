@@ -17,7 +17,7 @@ new Component({
         await interaction.deferUpdate();
 
         const done = async () => {
-            const message = await interaction.editReply({ embeds, components });
+            const message = await interaction.editReply({ embeds, components:[] });
             deleteMessage(message, 12 * 1000);
         };
 

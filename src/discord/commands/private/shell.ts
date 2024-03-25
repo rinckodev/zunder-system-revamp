@@ -46,8 +46,8 @@ new Command({
             ));
             await interaction.editReply({ embeds: [embed] });
             if (stderr) {
-                const embed = embedChat("danger", brBuilder(
-                    `${icon("cancel")} Retorno do console:`,
+                const embed = embedChat("warning", brBuilder(
+                    `${icon("next")} Retorno do console:`,
                     codeBlock(limitText(stderr, 3000, "..."))
                 ));
                 await interaction.followUp({ ephemeral, embeds: [embed] });

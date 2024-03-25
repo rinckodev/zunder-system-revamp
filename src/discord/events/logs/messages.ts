@@ -10,7 +10,7 @@ new Event({
     async run(message) {
 
         if (!message.inGuild() || !message.author) return;
-        const { guild, channel, author, client } = message;
+        const { guild, channel, author, client, embeds } = message;
         
         if (guild.id !== process.env.MAIN_GUILD_ID) return;
         if (author.id === client.user.id) return;
@@ -19,8 +19,7 @@ new Event({
         const files = Array.from(message.attachments.values());
 
         sendGuildLog({
-            guild, icon: "🗑️",                     
-            files, embeds,
+            guild, icon: "🗑️", files, embeds,
             details: brBuilder(
                 `mensagem de **@${author.username}** deletada em ${channelMention(channel.id)}`,
                 `> ${inlineCode(message.content)}`
@@ -41,6 +40,25 @@ new Event({
         if (author.id === guild.ownerId) return;
         if (oldMessage.content === newMessage.content) return;
     
+        const oldContentLength = oldMessage.content?.length??0;
+        const newContentLength = newMessage.content?.length??0;
+
+        if (oldContentLength + newContentLength >= 2800){
+            sendGuildLog({
+                icon: "✏️", guild,
+                details: brBuilder(
+                    `**@${author.username}** editou uma mensagem em ${channelMention(channel.id)}`,
+                ),
+            });
+            sendGuildLog({ guild,
+                details: `> ${icon("message")} : ${inlineCode(oldMessage.content ?? "")}`
+            });
+            sendGuildLog({ guild,
+                details: `> ${icon("pencil")} : ${inlineCode(newMessage.content ?? "")} `
+            });
+            return;
+        }
+
         sendGuildLog({
             icon: "✏️", guild,
             details: brBuilder(
