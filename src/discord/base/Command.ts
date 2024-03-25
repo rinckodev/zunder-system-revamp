@@ -39,6 +39,7 @@ export class Command<N extends string, D extends boolean, T extends ApplicationC
 	public static onCommand(interaction: CommandInteraction){
 		const command = Command.commands.get(interaction.commandName);
 		if (!command) return;
+		
 		command.run(interaction as never, command.store);
 	}
 	public static onAutocomplete(interaction: AutocompleteInteraction){

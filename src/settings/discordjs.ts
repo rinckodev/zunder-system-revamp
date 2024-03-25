@@ -11,4 +11,8 @@ declare module "discord.js" {
 		start(options?: ClientStartOptions): void;
 		readonly mainGuildData: HydratedDocument<GuildSchema>
 	}
+	interface GuildMember {
+		isRegistered?: boolean;
+		isRolesChecked?: boolean;
+	}
 }

@@ -1,5 +1,5 @@
 import { GuildSchema, MemberSchema, db } from "#database";
-import { brBuilder, findRole } from "@magicyan/discord";
+import { brBuilder, findRole, sleep } from "@magicyan/discord";
 import { Guild, GuildMember } from "discord.js";
 import { icon } from "../utils/emojis.js";
 import { sendGuildRecord } from "./guild-record.js";
@@ -30,11 +30,18 @@ export async function autoGiveRoles(member: GuildMember, memberData: MemberSchem
 
 export async function autoRegister(member: GuildMember){
     if (member.user.bot) return;
+    if (member.isRegistered) return;
     
     const isRegistered = await db.members.hasRegister(member);
     const memberData = await db.members.get(member);
 
-    await autoGiveRoles(member, memberData);
+    member.isRegistered = true;
+
+    if (!member.isRolesChecked){
+        member.isRolesChecked = true;
+        await autoGiveRoles(member, memberData);
+        await sleep(3000);
+    }
 
     if (!isRegistered){
         sendGuildRecord({
@@ -45,7 +52,7 @@ export async function autoRegister(member: GuildMember){
                 `${icon("check")} Registrado como membro discord`,
                 `- Nick: \`${member.user.username}\``
             ),
-            executor: member.client, target: await member.fetch(),
+            executor: member.client, target: member,
         });
         return;
     }
