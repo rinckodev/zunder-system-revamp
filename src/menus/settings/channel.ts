@@ -9,7 +9,7 @@ export const settingsChannelsSelectOptions = [
     { emoji: "🌍", label: "Global", value: "global", description: "Canal global",  },
     { emoji: "📢", label: "Anúncios", value: "announcement", description: "Canal de novidades" },
     { emoji: "💵", label: "Banco", value: "bank", description: "Banco da Zunder" },
-    { emoji: icon("book"), label: "Termos", value: "terms", description: "Canal de regras do servidor",  },
+    { emoji: "📜", label: "Termos", value: "terms", description: "Canal de regras do servidor",  },
     
     { emoji: "💬", label: "Geral", value: "general", description: "Canal de bate papo geral",  },
     
@@ -21,6 +21,8 @@ export const settingsChannelsSelectOptions = [
     
     { emoji: "👋", label: "Apresentações", value: "presentations", description: "Canal de apresentações de novos membros" },
     { emoji: "📷", label: "Instaplay", value: "instaplay", description: "Canal para compartilhar clips e imagens da gameplay" },
+    
+    { emoji: "🔭", label: "Conceitos", value: "concepts", description: "Canal de artes de conceito" },
 ] as const;
 
 export function settingsChannelsMenu(guildData: GuildSchema){

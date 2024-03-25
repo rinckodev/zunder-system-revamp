@@ -28,6 +28,7 @@ const guildChannels = new Schema({
     party: t.channel,
     presentations: t.channel,
     instaplay: t.channel,
+    concepts: t.channel,
 }, { _id: false });
 
 export const guildSchema = new Schema(

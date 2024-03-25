@@ -1,7 +1,7 @@
 import { Event } from "#base";
 import { deleteMessage, embedChat } from "#functions";
 import { brBuilder, createLinkButton, createRow } from "@magicyan/discord";
-import { codeBlock } from "discord.js";
+import { codeBlock, ThreadAutoArchiveDuration } from "discord.js";
 
 new Event({
     name: "Presentation system",
@@ -14,7 +14,7 @@ new Event({
         const { channels } = message.client.mainGuildData;
         
         switch(channel.id){
-            case channels?.presentations?.id:{
+            case channels.presentations?.id:{
                 if (message.content.length < 100){
                     message.delete();
                     const errMessage = [
@@ -44,7 +44,7 @@ new Event({
                 message.react("❤️");
                 return;
             }
-            case channels?.instaplay?.id:{
+            case channels.instaplay?.id:{
                 if (message.attachments.size < 1){
                     message.delete();
                     const embed = embedChat("danger", brBuilder(
@@ -68,6 +68,17 @@ new Event({
                 message.react("❤️");
                 message.react("🔥");
                 message.react("👎");
+                return;
+            }
+            case channels.concepts?.id:{
+                message.react("❤️");
+                message.react("🔥");
+                message.react("👎");
+
+                message.startThread({
+                    name: "💬 Comentários",
+                    autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek
+                });
                 return;
             }
         }
