@@ -65,9 +65,7 @@ export function settingsInformationMenu(guildData: GuildSchema, selected: string
     const { information } = guildData;
 
     const info = information[+selected];
-
     
-
     const embed = createEmbed({
         color: settings.colors.info,
         description: brBuilder(

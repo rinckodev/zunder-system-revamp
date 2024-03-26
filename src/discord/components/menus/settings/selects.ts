@@ -28,7 +28,11 @@ new Component({
             }
         }
 
+        console.log(menu, args);
+
         if (interaction.isStringSelectMenu()){
+            console.log("select");
+            
             const [selected] = interaction.values;
             switch(menu){
                 case "ranks":{
@@ -52,6 +56,7 @@ new Component({
                     return;
                 }
                 case "information":{
+
                     interaction.update(menus.settings.information.submenu(guildData, selected));
                     return;
                 }

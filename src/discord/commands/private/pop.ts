@@ -8,6 +8,7 @@ new Command({
     defaultMemberPermissions: ["Administrator"],
     type: ApplicationCommandType.ChatInput,
     async run(interaction){
+
         interaction.reply({ content: "test" });
     }
 });
