@@ -28,10 +28,7 @@ new Component({
             }
         }
 
-        console.log(menu, args);
-
         if (interaction.isStringSelectMenu()){
-            console.log("select");
             
             const [selected] = interaction.values;
             switch(menu){
