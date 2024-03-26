@@ -7,3 +7,7 @@ export function isEmail(email: string){
 export function isUrl(url: string){
     return z.string().url().safeParse(url).success;
 }
+
+export function isNumeric(text: string){
+    return /^\d+$/.test(text);
+}

@@ -1,8 +1,8 @@
 import { Command } from "#base";
 import { embedChat, icon } from "#functions";
 import { settings } from "#settings";
-import { brBuilder, createEmbed } from "@magicyan/discord";
-import { ApplicationCommandOptionType, ApplicationCommandType, ChannelType, codeBlock } from "discord.js";
+import { brBuilder, createEmbed, createLinkButton, createRow } from "@magicyan/discord";
+import { ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, ButtonStyle, ChannelType, codeBlock } from "discord.js";
 
 new Command({
     name: "setup",
@@ -36,7 +36,14 @@ new Command({
                     type: ApplicationCommandOptionType.Channel,
                     channelTypes: [ChannelType.GuildText],
                     required
-                }
+                },
+                {
+                    name: "terms",
+                    description: "Select terms channel",
+                    type: ApplicationCommandOptionType.Channel,
+                    channelTypes: [ChannelType.GuildText],
+                    required
+                },
             ]
         },
     ],
@@ -88,17 +95,54 @@ new Command({
             }
             case "informations":{
                 const channel = options.getChannel("channel", true, [ChannelType.GuildText]);
+                const terms = options.getChannel("terms", true, [ChannelType.GuildText]);
+
+                const urls = {
+                    invite: "http://discord.gg/tTu8dGN",
+                    youtube: "https://www.youtube.com/@zundergroup",
+                    tiktok: "https://www.tiktok.com/@zundergroup",
+                    instagram: "https://www.instagram.com/zundergroup",
+                };
 
                 const embed = createEmbed({
-                    color: settings.colors.info,
-                    description: "", // TODO add description
+                    color: settings.colors.azoxo,
+                    description: brBuilder(
+                        "# 📄 Informações",
+                        "> A **Zunder** é uma comunidade que busca unir as pessoas em um ambiente livre de toxidade. Sempre tentando aproximar jogadores, programadores e qualquer tipo de pessoa.",
+                        "",
+                        `> Todos aqui são bem vindos, não importa de onde tenha vindo, poderá interagir com todos no grupo desde que siga os ${terms} da comunidade para que não haja nenhum conflito ou desavença.`,
+                        "",
+                        `## ${icon("discord")} Convite oficial do servidor`,
+                        `${urls.invite} [${icon("link")}](${urls.invite})`,
+                        "",
+                        "## Acompanhe a gente nas redes sociais",
+                        `- ${icon("s-youtube")} Youtube: ${urls.youtube} [${icon("link")}](${urls.youtube})`,
+                        `- ${icon("s-tiktok")} Tiktok ${urls.tiktok} [${icon("link")}](${urls.tiktok})`,
+                        `- ${icon("s-instagram")} Instagram: ${urls.instagram} [${icon("link")}](${urls.instagram})`,
+                        "",
+                        "> Clique no botão abaixo para mais informações"    
+                    ),
                     footer: {
                         text: guild.name,
                         iconURL: guild.iconURL()
                     }
                 });
 
-                channel.send({ embeds: [embed] })
+                const row = createRow(
+                    new ButtonBuilder({
+                        customId: "information/index", 
+                        label: "Índice de informações", 
+                        style: ButtonStyle.Primary,
+                        emoji: icon("home")
+                    }),
+                    createLinkButton({
+                        url: terms.url,
+                        label: "Termos",
+                        emoji: "📜"
+                    })
+                );
+
+                channel.send({ embeds: [embed], components: [row] })
                 .then(message => {
                     message.react(icon("check").id);
                 

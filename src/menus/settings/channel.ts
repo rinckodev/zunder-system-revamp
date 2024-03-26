@@ -10,18 +10,14 @@ export const settingsChannelsSelectOptions = [
     { emoji: "📢", label: "Anúncios", value: "announcement", description: "Canal de novidades" },
     { emoji: "💵", label: "Banco", value: "bank", description: "Banco da Zunder" },
     { emoji: "📜", label: "Termos", value: "terms", description: "Canal de regras do servidor",  },
-    
+    { emoji: "📃", label: "Informações", value: "information", description: "Canal de informações do servidor",  },
     { emoji: "💬", label: "Geral", value: "general", description: "Canal de bate papo geral",  },
-    
     { emoji: "🧰", label: "Gerenciamento", value: "management", description: "Canal destinado a gerenciar sistemas" },
     { emoji: "📋", label: "Registros", value: "records", description: "Canal de registros de ações e eventos no servidor" },
-    
     { emoji: "📃", label: "Logs", value: "logs", description: "Canal de logs mais detalhados" },
     { emoji: "📋", label: "Auditoria", value: "audit", description: "Onde fica registrado as atividades dos membros" },
-    
     { emoji: "👋", label: "Apresentações", value: "presentations", description: "Canal de apresentações de novos membros" },
     { emoji: "📷", label: "Instaplay", value: "instaplay", description: "Canal para compartilhar clips e imagens da gameplay" },
-    
     { emoji: "🔭", label: "Conceitos", value: "concepts", description: "Canal de artes de conceito" },
 ] as const;
 

@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 import { t } from "../utils.js";
+import { ButtonStyle } from "discord.js";
 
 const resourceCategory = new Schema({
     id: t.string,
@@ -22,6 +23,7 @@ const guildChannels = new Schema({
     announcement: t.channel,
     bank: t.channel,
     terms: t.channel,
+    information: t.channel,
     management: t.channel,
     records: t.channel,
     audit: t.channel,
@@ -29,6 +31,22 @@ const guildChannels = new Schema({
     presentations: t.channel,
     instaplay: t.channel,
     concepts: t.channel,
+}, { _id: false });
+
+const guildInformation = new Schema({
+    title: t.string,
+    description: t.string,
+    emoji: String,
+    style: {
+        type: Number,
+        enum: [
+            ButtonStyle.Primary, 
+            ButtonStyle.Secondary, 
+            ButtonStyle.Success, 
+            ButtonStyle.Danger
+        ] as const,
+        default: ButtonStyle.Primary
+    }
 }, { _id: false });
 
 export const guildSchema = new Schema(
@@ -39,7 +57,7 @@ export const guildSchema = new Schema(
         },
         channels: {
             type: guildChannels,
-            default: {}
+            default: {},
         },
         ranks: {
             levels: {
@@ -56,7 +74,8 @@ export const guildSchema = new Schema(
         },
         resources: {
             categories: [resourceCategory]
-        }
+        },
+        information: [guildInformation]
     },
     {
         statics: {

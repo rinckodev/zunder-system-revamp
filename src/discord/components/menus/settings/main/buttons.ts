@@ -24,6 +24,10 @@ new Component({
                 interaction.editReply(menus.settings.ranks.menu(guild));
                 return;
             }
+            case "information":{
+                interaction.editReply(menus.settings.information.main(guildData));
+                return;
+            }
         }
     }
 });

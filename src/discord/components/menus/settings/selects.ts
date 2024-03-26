@@ -29,27 +29,30 @@ new Component({
         }
 
         if (interaction.isStringSelectMenu()){
+            const [selected] = interaction.values;
             switch(menu){
                 case "ranks":{
                     await interaction.deferUpdate();
-
-                    const [selectedItem] = interaction.values;
                     
                     const [submenu] = args;
                     switch(submenu){
                         case "types":{
                             interaction.editReply(
-                                menus.settings.ranks.types.submenu(guildData, selectedItem)
+                                menus.settings.ranks.types.submenu(guildData, selected)
                             );
                             return;
                         }
                         case "levels":{
                             interaction.editReply(
-                                menus.settings.ranks.levels.submenu(guildData, selectedItem)
+                                menus.settings.ranks.levels.submenu(guildData, selected)
                             );
                             return;
                         }
                     }
+                    return;
+                }
+                case "information":{
+                    interaction.update(menus.settings.information.submenu(guildData, selected));
                     return;
                 }
             }

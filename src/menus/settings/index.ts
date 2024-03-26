@@ -1,4 +1,5 @@
 import { settingsChannelMenu, settingsChannelsMenu, settingsChannelsSelectOptions } from "./channel.js";
+import { settingsInformationMenu, settingsInformationsMenu } from "./information.js";
 import { settingsMainMenu } from "./main.js";
 import { settingsRanksLevelMenu, settingsRanksLevelsMenu, settingsRanksLevelsSelectOptions } from "./ranks/levels.js";
 import { settingsRanksMenu } from "./ranks/main.js";
@@ -23,5 +24,9 @@ export const settingsMenu = {
             menu: settingsRanksLevelsMenu,
             submenu: settingsRanksLevelMenu
         }
+    },
+    information: {
+        main: settingsInformationsMenu,
+        submenu: settingsInformationMenu,
     }
 } as const;
