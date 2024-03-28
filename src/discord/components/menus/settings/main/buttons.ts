@@ -28,6 +28,10 @@ new Component({
                 interaction.editReply(menus.settings.information.main(guildData));
                 return;
             }
+            case "aibot":{
+                interaction.editReply(menus.settings.aibot.main(guildData));
+                return;
+            }
         }
     }
 });

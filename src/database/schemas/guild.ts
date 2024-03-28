@@ -75,7 +75,10 @@ export const guildSchema = new Schema(
         resources: {
             categories: [resourceCategory]
         },
-        information: [guildInformation]
+        information: [guildInformation],
+        aibot: {
+            enabled: Boolean,
+        }
     },
     {
         statics: {

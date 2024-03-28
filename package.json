@@ -15,6 +15,7 @@
     "commit": "npx gitmoji-cli -c"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.3.1",
     "@magicyan/canvas": "^0.0.10",
     "@magicyan/discord": "^1.0.22",
     "@magicyan/discord-events": "^1.0.13",

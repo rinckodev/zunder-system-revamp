@@ -1,3 +1,4 @@
+import { settingsAIBotMenu } from "./aibot.js";
 import { settingsChannelMenu, settingsChannelsMenu, settingsChannelsSelectOptions } from "./channel.js";
 import { settingsInformationMenu, settingsInformationsMenu } from "./information.js";
 import { settingsMainMenu } from "./main.js";
@@ -28,5 +29,8 @@ export const settingsMenu = {
     information: {
         main: settingsInformationsMenu,
         submenu: settingsInformationMenu,
+    },
+    aibot: {
+        main: settingsAIBotMenu,
     }
 } as const;

@@ -62,6 +62,11 @@ export function settingsMainMenu(guild: Guild){
             label: "Informações", emoji: "📃",
             style: ButtonStyle.Secondary 
         }),
+        new ButtonBuilder({
+            customId: "menu/settings/aibot",
+            label: "IA", emoji: "🤖",
+            style: ButtonStyle.Secondary 
+        }),
     );
 
     return { ephemeral, embeds, components: [row] };

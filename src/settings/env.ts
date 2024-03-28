@@ -5,6 +5,7 @@ const envSchema = z.object({
     WEBHOOK_LOGS_URL: z.string().url().optional(),
     MONGO_URI: z.string({ description: "MongoDb URI is required" }),
     MAIN_GUILD_ID: z.string(),
+    GEMINI_API_KEY: z.string()
 });
 
 type EnvSchema = z.infer<typeof envSchema>;
