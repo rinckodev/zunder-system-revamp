@@ -53,7 +53,6 @@ new Component({
                     return;
                 }
                 case "information":{
-
                     interaction.update(menus.settings.information.submenu(guildData, selected));
                     return;
                 }

@@ -222,8 +222,9 @@ new Command({
                         const id = options.getString("id", true);
                         
                         if (categories.some(c => c.id === id)){
-                            const embed = embedChat("danger", `${icon("cancel")} Já existe uma categoria de recurso com o id \`${id}\``);
-                            interaction.editReply({ embeds: [embed] });
+                            interaction.editReply(embedChat("danger", 
+                                `${icon("cancel")} Já existe uma categoria de recurso com o id \`${id}\``
+                            ));
                             return;
                         }
                         
@@ -244,8 +245,9 @@ new Command({
 
                         await guildData.$set("resources.categories", categories).save();
 
-                        const embed = embedChat("success", `${icon("check")} Categoria de recurso criada com sucesso!`);
-                        interaction.editReply({ embeds: [embed] });
+                        interaction.editReply(embedChat("success", 
+                            `${icon("check")} Categoria de recurso criada com sucesso!`
+                        ));
                         return;
                     }
                     case "edit":{
@@ -254,8 +256,9 @@ new Command({
                         const category = categories.find(c => c.id === id); 
 
                         if (!category){
-                            const embed = embedChat("danger", `${icon("cancel")} Não foi encontrada uma categoria de recurso com o id \`${id}\``);
-                            interaction.editReply({ embeds: [embed] });
+                            interaction.editReply(embedChat("danger", 
+                                `${icon("cancel")} Não foi encontrada uma categoria de recurso com o id \`${id}\``
+                            ));
                             return;
                         }
                         
@@ -278,24 +281,27 @@ new Command({
 
                         await guildData.$set("resources.categories", categories).save();
 
-                        const embed = embedChat("success", `${icon("check")} Categoria de recurso editada com sucesso!`);
-                        interaction.editReply({ embeds: [embed] });
+                        interaction.editReply(embedChat("success",
+                            `${icon("check")} Categoria de recurso editada com sucesso!`
+                        ));
                         return;
                     }
                     case "delete":{
                         const id = options.getString("id", true);
                         if (!categories.some(c => c.id !== id)){
-                            const embed = embedChat("danger", `${icon("cancel")} Não foi encontrada uma categoria de recurso com o id \`${id}\``);
-                            interaction.editReply({ embeds: [embed] });
+                            interaction.editReply(embedChat("danger", 
+                                `${icon("cancel")} Não foi encontrada uma categoria de recurso com o id \`${id}\``
+                            ));
                             return;
                         }
 
                         const updatedCategories = categories.filter(c => c.id !== id);
 
                         await guildData.$set("resources.categories", updatedCategories).save();
-                        
-                        const embed = embedChat("success", `${icon("check")} Categoria de recurso deletada com sucesso!`);
-                        interaction.editReply({ embeds: [embed] });
+
+                        interaction.editReply(embedChat("success", 
+                            `${icon("check")} Categoria de recurso deletada com sucesso!`
+                        ));
                         return;
                     }
                 }

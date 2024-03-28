@@ -55,8 +55,7 @@ new Component({
                 const categories = guildData.resources?.categories!;
                 const category = categories.find(c => c.id === categoryId!)!;
                 if (category.tags.length < 1){
-                    const embed = embedChat("danger", "A categoria seleciona não tem tags definidas!");
-                    interaction.followUp({ ephemeral, embeds: [embed] });
+                    interaction.followUp(embedChat("danger", "A categoria seleciona não tem tags definidas!"));
                     return;
                 }
 
@@ -93,8 +92,7 @@ new Component({
                 const categories = guildData.resources?.categories!;
 
                 if (categories.length < 1){
-                    const embed = embedChat("danger", "Nenhum categoria definida! Contate a equipe!");
-                    interaction.followUp({ ephemeral, embeds: [embed] });
+                    interaction.followUp(embedChat("danger", "Nenhum categoria definida! Contate a equipe!"));
                     return;
                 }
 
@@ -124,8 +122,7 @@ new Component({
                 const channel = findChannel(guild).byId(category?.channel.id??"");
                 
                 if (!category || !channel){
-                    const embed = embedChat("danger", "O canal da categoria escolhida não está definido!");
-                    interaction.followUp({ ephemeral, embeds: [embed] });
+                    interaction.followUp(embedChat("danger", "O canal da categoria escolhida não está definido!"));
                     return;
                 }
                 
@@ -162,7 +159,7 @@ new Component({
                     })
                 );
 
-                const embedInfo = embedChat("warning", "Deseja confirmar o envio deste recurso?");
+                const embedInfo = embedChat("warning", "Deseja confirmar o envio deste recurso?").embed;
 
                 confirm({
                     components: buttons => [createRow(
@@ -174,18 +171,14 @@ new Component({
                     async onClick(interaction, isCancel) {
                         if (isCancel){
                             await interaction.update(menus.resources.create(member, getResourceInfo(resourceEmbed)));
-                            const embed = embedChat("danger", "Você cancelou essa ação!");
-                            interaction.followUp({ ephemeral, embeds: [embed] });
+                            interaction.followUp(embedChat("danger", "Você cancelou essa ação!"));
                             return;
                         }
-
-                        const embed = embedChat("warning", `${icon(":a:spinner")} Aguarde...`);
-                        await interaction.update({ embeds: [embed], components: [] });
+                        await interaction.update(embedChat("warning", `${icon(":a:spinner")} Aguarde...`).custom(true));
 
                         channel.send({ embeds: [embedFinal], files: getEmbedFiles(embedFinal), components: [resourceRow] })
                         .then(async message => {
-                            const embed = embedChat("success", `${icon("check")} Recurso enviado com sucesso! Confira: ${message.url}`);
-                            interaction.editReply({ embeds: [embed] });
+                            interaction.editReply(embedChat("success", `${icon("check")} Recurso enviado com sucesso! Confira: ${message.url}`));
                         
                             await message.react("❤️");
                             await message.react("🔥");
@@ -209,8 +202,7 @@ new Component({
                             );
                         })
                         .catch(err => {
-                            const embed = embedChat("danger", `${icon("cancel")} Não foi possível enviar o recurso! ${codeBlock(err)}`);
-                            interaction.editReply({ embeds: [embed] });
+                            interaction.editReply(embedChat("danger", `${icon("cancel")} Não foi possível enviar o recurso! ${codeBlock(err)}`));
                         });
                     },
                 });

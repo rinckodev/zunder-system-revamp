@@ -15,8 +15,7 @@ new Component({
 
         const profileMember = findMember(guild).byId(profileMemberId);
         if (!profileMember){
-            const embed = embedChat("danger", `${icon("cancel")} O membro não foi localizado no servidor!`);
-            interaction.editReply({ embeds: [embed], components: [] });
+            interaction.editReply(embedChat("danger", `${icon("cancel")} O membro não foi localizado no servidor!`));
             return;
         }
 

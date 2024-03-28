@@ -114,8 +114,7 @@ export const resourceCommand = new Command({
 
         const cooldown = cooldowns.get(cooldownKey) ?? now;
         if (cooldown > now){
-            const embed = embedChat("danger", `Você poderá usar este comando novamente ${time(cooldown, "R")}`);
-            interaction.reply({ ephemeral, embeds: [embed] });
+            interaction.reply(embedChat("danger", `Você poderá usar este comando novamente ${time(cooldown, "R")}`));
             return;
         }
 
@@ -138,8 +137,7 @@ export const resourceCommand = new Command({
                 }));
 
                 if (!isUrl(url)){
-                    const embed = embedChat("danger", `${icon("cancel")} A url enviada não é válida!`);
-                    interaction.followUp({ ephemeral, embeds: [embed] });
+                    interaction.followUp(embedChat("danger", `${icon("cancel")} A url enviada não é válida!`));
                 }
 
                 if (banner || thumbnail) {
@@ -158,8 +156,7 @@ export const resourceCommand = new Command({
                 
                 const result = await findResource(messageUrl, guild);
                 if (!result.success){
-                    const embed = embedChat("danger", result.error);
-                    interaction.editReply({ embeds: [embed] });
+                    interaction.editReply(embedChat("danger", result.error));
                     return;
                 }
 
@@ -167,12 +164,11 @@ export const resourceCommand = new Command({
                 
                 const memberData = await db.members.get(member);
                 if (authorId !== member.id && (memberData.rank?.level??1) < 4){
-                    const embed = embedChat("danger", spaceBuilder(
+                    interaction.editReply(embedChat("danger", spaceBuilder(
                         `${icon("cancel")} Apenas superiores podem`,
                         subcommand === "delete" ? "deletar" : "editar",
                         "recursos de outras pessoas!"
-                    ));
-                    interaction.editReply({ embeds: [embed] });
+                    )));
                     return;
                 }
 
@@ -182,7 +178,7 @@ export const resourceCommand = new Command({
                             "Você está prestes a deletar um recurso",
                             `Título **${resourceEmbed.data.title}**`,
                             `Por ${userMention(authorId)}`    
-                        ));
+                        )).embed;
         
                         confirm({
                             components: buttons => [createRow(
@@ -194,19 +190,16 @@ export const resourceCommand = new Command({
                             async onClick(interaction, isCancel) {
                                 await interaction.update({ components: [] });
                                 if (isCancel){
-                                    const embed = embedChat("danger", `${icon("cancel")} Você cancelou essa ação!`);
-                                    interaction.editReply({ embeds: [embed] });
+                                    interaction.editReply(embedChat("danger", `${icon("cancel")} Você cancelou essa ação!`));
                                     return;
                                 }
         
                                 message.delete()
                                 .then(() => {
-                                    const embed = embedChat("success", `${icon("check")} O recurso foi deletado com sucesso!`);
-                                    interaction.editReply({ embeds: [embed] });
+                                    interaction.editReply(embedChat("success", `${icon("check")} O recurso foi deletado com sucesso!`));
                                 })
                                 .catch(err => {
-                                    const embed = embedChat("danger", `${icon("cancel")} Não foi possível deletar o recurso! ${codeBlock(err)}`);
-                                    interaction.editReply({ embeds: [embed] });
+                                    interaction.editReply(embedChat("danger", `${icon("cancel")} Não foi possível deletar o recurso! ${codeBlock(err)}`));
                                 });
                             },
                         });

@@ -1,4 +1,5 @@
 import { Command } from "#base";
+import { icon, res } from "#functions";
 import { ApplicationCommandType } from "discord.js";
 
 new Command({
@@ -8,7 +9,8 @@ new Command({
     defaultMemberPermissions: ["Administrator"],
     type: ApplicationCommandType.ChatInput,
     async run(interaction){
-
-        interaction.reply({ content: "test" });
+        interaction.reply(res.success(
+            `${icon(":a:spinner")} Aguarde...`
+        ));
     }
 });

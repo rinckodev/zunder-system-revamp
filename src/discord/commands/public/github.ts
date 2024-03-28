@@ -32,16 +32,14 @@ new Command({
         const subcommand = options.getSubcommand(true);
         switch(subcommand){
             case "users":{
-                const embedInfo = embedChat("primary", `${icon(":a:spinner")} Buscando dados! Aguarde...`);
-                await interaction.reply({ ephemeral, embeds: [embedInfo] });
+                await interaction.reply(embedChat("primary", `${icon(":a:spinner")} Buscando dados! Aguarde...`));
 
                 const username = options.getString("username", true);
 
                 const response = await octokit.request(`GET /users/${username}`).catch(toNull);
 
                 if (!response || response.status === StatusCodes.NOT_FOUND){
-                    const embed = embedChat("danger", `${icon("cancel")} Não foi encontrado um usuário do github com o nome \`${username}\`!`);
-                    interaction.editReply({ embeds: [embed] });
+                    interaction.editReply(embedChat("danger", `${icon("cancel")} Não foi encontrado um usuário do github com o nome \`${username}\`!`));
                     return;
                 }
                 

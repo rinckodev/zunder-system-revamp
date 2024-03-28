@@ -23,14 +23,12 @@ new Component({
 
         const mention = findMember(guild).byId(mentionId);
         if (!mention){
-            const embed = embedChat("danger", `${icon("cancel")} O membro não foi encontrado no servidor!`);
-            embeds.push(embed); done();
+            embeds.push(embedChat("danger", `${icon("cancel")} O membro não foi encontrado no servidor!`).embed); done();
             return;
         }
 
         if (action === "recuse"){
-            const embed = embedChat("danger", `${icon("cancel")} A solicitação de ${mention} foi recusada!`);
-            embeds.push(embed); done();
+            embeds.push(embedChat("danger", `${icon("cancel")} A solicitação de ${mention} foi recusada!`).embed); done();
             return;
         }
 
@@ -40,22 +38,19 @@ new Component({
         const discordRankTypeRole = findRole(guild).byId(ranks?.types?.discord?.id ?? "");
 
         if (!zunderRankTypeRole || !discordRankTypeRole){
-            const embed = embedChat("danger", `${icon("cancel")} Um dos cargos de tipo de registro não está definido!`);
-            interaction.followUp({ ephemeral, embeds:[embed] });
+            interaction.followUp(embedChat("danger", `${icon("cancel")} Um dos cargos de tipo de registro não está definido!`));
             return;
         }
 
         const mentionData = await db.members.get(mention);
         if (mentionData?.rank?.type === "zunder"){
-            const embed = embedChat("primary", `${icon("book")} O membro já tem um registro Zunder!`);
-            embeds.push(embed); done();
+            embeds.push(embedChat("primary", `${icon("book")} O membro já tem um registro Zunder!`).embed); done();
             return;
         }
 
         switch(action){
             case "approve":{
-                const embed = embedChat("success", `${icon("check")} A solicitação de ${mention} foi aprovada!`);
-                embeds.push(embed);
+                embeds.push(embedChat("success", `${icon("check")} A solicitação de ${mention} foi aprovada!`).embed);
 
                 await mentionData.set("rank", {
                     level: mentionData?.rank?.level ?? 1, 

@@ -45,11 +45,10 @@ new Modal({
                 const reason = fields.getTextInputValue("reason/input");
                 reason;
 
-                const embed = embedChat("success", spaceBuilder(
+                interaction.reply(embedChat("success", spaceBuilder(
                     `${icon("check")} Você reportou o recurso`,
                     title??"", author ? `de ${author}` : ""
-                ));
-                interaction.reply({ ephemeral, embeds: [embed]  });
+                )));
                 return;
             }
         }

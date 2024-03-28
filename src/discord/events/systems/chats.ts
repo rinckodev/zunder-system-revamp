@@ -25,7 +25,7 @@ new Event({
                     const embed = embedChat("danger", brBuilder(errMessage,
                         "- Para não perder o que você já escreveu: ",
                         codeBlock(message.content),
-                    ));
+                    )).embed;
                     const row = createRow(
                         createLinkButton({ 
                             label: "Voltar para o canal de apresentações",
@@ -35,8 +35,7 @@ new Event({
                     message.author.send({ embeds: [embed], components: [row]})
                     .then(m => deleteMessage(m, 60000))
                     .catch(async () => {
-                        const embed = embedChat("danger", brBuilder(errMessage));
-                        deleteMessage(await channel.send({ embeds: [embed] }), 22000);
+                        deleteMessage(await channel.send(embedChat("danger", brBuilder(errMessage))), 22000);
                     });
                     return;
                 }
@@ -50,7 +49,7 @@ new Event({
                     const embed = embedChat("danger", brBuilder(
                         "Você deve enviar imagens ou vídeos no canal:",
                         `${message.channel}`
-                    ));
+                    )).embed;
                     const row = createRow(
                         createLinkButton({ 
                             label: "Voltar para o canal instaplay",

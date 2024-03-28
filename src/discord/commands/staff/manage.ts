@@ -36,8 +36,7 @@ new Command({
                 });
                 
                 if (membersDatas.length < 1){
-                    const embed = embedChat("danger", `${icon("cancel")} Não existem ainda dados de membros Zunder`);
-                    interaction.editReply({ embeds: [embed] });
+                    interaction.editReply(embedChat("danger", `${icon("cancel")} Não existem ainda dados de membros Zunder`));
                     return;
                 }
 
@@ -105,13 +104,11 @@ new Command({
                                 await interaction.update({ components: [] });
 
                                 if (isCancel){
-                                    const embed = embedChat("danger", `${icon("cancel")} Ação cancelada!`);
-                                    interaction.editReply({ embeds: [embed] });
+                                    interaction.editReply(embedChat("danger", `${icon("cancel")} Ação cancelada!`));
                                     return;
                                 }
 
-                                const embed = embedChat("success", `${icon("check")} O registro Zunder de ${mention} foi encerrado!`);
-                                interaction.editReply({ embeds: [embed] });
+                                interaction.editReply(embedChat("success", `${icon("check")} O registro Zunder de ${mention} foi encerrado!`));
 
                                 closeZunderRegister(member, mention);
                             },

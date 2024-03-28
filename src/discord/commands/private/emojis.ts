@@ -1,6 +1,7 @@
 import { Command } from "#base";
+import { embedChat } from "#functions";
 import { settings } from "#settings";
-import { brBuilder, createEmbed, findEmoji } from "@magicyan/discord";
+import { brBuilder, findEmoji } from "@magicyan/discord";
 import { ApplicationCommandOptionType, ApplicationCommandType, AttachmentBuilder, formatEmoji, inlineCode } from "discord.js";
 
 new Command({
@@ -65,18 +66,15 @@ new Command({
                 const statics = check(settings.emojis.static);
                 const animateds = check(settings.emojis.animated);
 
-                const embed = createEmbed({
-                    color: settings.colors.primary,
-                    description: brBuilder(
+                interaction.reply(embedChat("primary",
+                    brBuilder(
                         "# Lista de emojis",
                         "## Estáticos",
                         statics, 
                         "## Animados",
                         animateds,
-                    ),
-                });
-
-                interaction.reply({ ephemeral, embeds: [embed] });
+                    )
+                ));
                 return;
             }
         }

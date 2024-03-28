@@ -109,8 +109,9 @@ new Command({
         const { options, guild, member } = interaction;
 
         if (member.id !== guild.ownerId) {
-            const embed = embedChat("danger", `${icon("cancel")} Apenas o dono da guilda pode usar este comando!`);
-            interaction.reply({ ephemeral, embeds: [embed] });
+            interaction.reply(embedChat("danger", 
+                `${icon("cancel")} Apenas o dono da guilda pode usar este comando!`
+            ));
             return;
         }
 
@@ -132,6 +133,7 @@ new Command({
 
                         embeds.push(embedChat("success",
                             `${icon("pencil")} O nível do rank de ${mention} foi alterado de \`${rank.level}\` para \`${level}\``)
+                            .embed
                         );
                         mentionData.$set("rank.level", level);
                         break;
@@ -141,6 +143,7 @@ new Command({
 
                         embeds.push(embedChat("success",
                             `${icon("pencil")} O tipo de rank de ${mention} foi alterado de \`${rank.type}\` para \`${type}\``)
+                            .embed
                         );
 
                         mentionData.$set("rank.type", type);
@@ -151,6 +154,7 @@ new Command({
 
                         embeds.push(embedChat("success",
                             `${icon("pencil")} O dispositivo do rank de ${mention} foi alterado de \`${rank.device}\` para \`${device}\``)
+                            .embed
                         );
 
                         mentionData.$set("rank.device", device);
@@ -161,6 +165,7 @@ new Command({
 
                         embeds.push(embedChat("success",
                             `${icon("pencil")} O nick do rank de ${mention} foi alterado de \`${rank.nick}\` para \`${nick}\``)
+                            .embed
                         );
 
                         mentionData.$set("rank.nick", nick);

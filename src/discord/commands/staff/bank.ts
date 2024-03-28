@@ -67,16 +67,14 @@ new Command({
         await interaction.deferReply({ ephemeral });
 
         if (guild.id != process.env.MAIN_GUILD_ID) {
-            const embed = embedChat("danger", `${icon("cancel")} Este comando só pode ser usado no servidor principal!`);
-            interaction.editReply({ embeds: [embed] });
+            interaction.editReply(embedChat("danger", `${icon("cancel")} Este comando só pode ser usado no servidor principal!`));
             return;
         }
 
         const memberData = await db.members.get(member);
 
         if (!memberData.rank || memberData.rank.level < 5) {
-            const embed = embedChat("danger", `${icon("cancel")} Apenas líderes podem usar este comando!`);
-            interaction.editReply({ embeds: [embed] });
+            interaction.editReply(embedChat("danger", `${icon("cancel")} Apenas líderes podem usar este comando!`));
             return;
         }
 
@@ -84,8 +82,7 @@ new Command({
         const bankChannel = findChannel(guild).byId(guildData.channels?.bank?.id ?? "");
 
         if (!bankChannel) {
-            const embed = embedChat("danger", `${icon("cancel")} Não foi possível encontrar o chat do banco!`);
-            interaction.editReply({ embeds: [embed] });
+            interaction.editReply(embedChat("danger", `${icon("cancel")} Não foi possível encontrar o chat do banco!`));
             return;
         }
 
@@ -96,8 +93,7 @@ new Command({
 
                 const mentionData = await db.members.get(mention);
                 if (!mentionData) {
-                    const embed = embedChat("danger", `${icon("cancel")} O membro mencionado não está registrado!`);
-                    interaction.editReply({ embeds: [embed] });
+                    interaction.editReply(embedChat("danger", `${icon("cancel")} O membro mencionado não está registrado!`));
                     return;
                 }
 
@@ -106,19 +102,17 @@ new Command({
                         buttons.confirm, buttons.cancel
                     )],
                     render(components) {
-                        const embed = embedChat("warning", `Deseja adicionar ${amount} reais doados por ${mention} ao banco da Zunder?`);
+                        const embed = embedChat("warning", `Deseja adicionar ${amount} reais doados por ${mention} ao banco da Zunder?`).embed;
                         return interaction.editReply({ embeds: [embed], components });
                     },
                     async onClick(interaction, isCancel) {
 
                         if (isCancel) {
-                            const embed = embedChat("danger", `${icon("cancel")} A operação foi cancelada!`);
-                            interaction.update({ embeds: [embed], components: [] });
+                            interaction.update(embedChat("danger", `${icon("cancel")} A operação foi cancelada!`).custom(true));
                             return;
                         }
 
-                        const embed = embedChat("success", `${icon("check")} O valor doado por ${mention} foi adicionado ao banco!`);
-                        interaction.update({ embeds: [embed], components: [] });
+                        interaction.update(embedChat("success", `${icon("check")} O valor doado por ${mention} foi adicionado ao banco!`).custom(true));
 
                         const embedLog = createEmbed({
                             color: settings.colors.green,
@@ -134,16 +128,14 @@ new Command({
 
                         await mentionData.$inc("statistics.donation", amount).save();
 
-                        embed.setDescription(brBuilder(
+                        mention.send(embedChat("success", brBuilder(
                             "## A zunder agradece pela contribuição",
                             "> Você pode acompanhar como o dinheiro que o nosso grupo",
                             "> recebe de doações está sendo usado, no chat:",
                             bankChannel.toString(),
                             "",
                             `💵 Valor doado: \` ${amount} \` reais`
-                        ));
-
-                        mention.send({ embeds: [embed] }).catch(toNull);
+                        ))).catch(toNull);
 
                         const total = (guildData.bank?.total ?? 0) + amount;
 
@@ -163,18 +155,16 @@ new Command({
                         buttons.confirm, buttons.cancel
                     )],
                     render(components) {
-                        const embed = embedChat("warning", `Deseja remover ${amount} reais do banco da Zunder?`);
+                        const embed = embedChat("warning", `Deseja remover ${amount} reais do banco da Zunder?`).embed;
                         return interaction.editReply({ embeds: [embed], components });
                     },
                     async onClick(interaction, isCancel) {
                         if (isCancel) {
-                            const embed = embedChat("danger", `${icon("cancel")} A operação foi cancelada!`);
-                            interaction.update({ embeds: [embed], components: [] });
+                            interaction.update(embedChat("danger", `${icon("cancel")} A operação foi cancelada!`).custom(true));
                             return;
                         }
 
-                        const embed = embedChat("success", `${icon("check")} O valor foi removido do banco!`);
-                        interaction.update({ embeds: [embed], components: [] });
+                        interaction.update(embedChat("success", `${icon("check")} O valor foi removido do banco!`).custom(true));
 
                         const embedLog = createEmbed({
                             color: settings.colors.danger,

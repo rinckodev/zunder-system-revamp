@@ -12,8 +12,7 @@ new Component({
         const { information } = interaction.client.mainGuildData;
 
         if (information.length < 1){
-            const embed = embedChat("info", "🚧 Não há informações definidas ainda!");
-            interaction.reply({ ephemeral, embeds: [embed] });
+            interaction.reply(embedChat("info", "🚧 Não há informações definidas ainda!"));
             return;
         }
         
@@ -52,8 +51,7 @@ new Component({
 
         const info = information[+index];
         if (!info){
-            const embed = embedChat("danger", `${icon("cancel")} A informação selecionada não foi definida!`);
-            interaction.reply({ ephemeral, embeds: [embed] });
+            interaction.reply(embedChat("danger", `${icon("cancel")} A informação selecionada não foi definida!`));
             return;
         }
 

@@ -36,13 +36,11 @@ new Modal({
 
                 await interaction.update(updateOptions)
                 .catch(async err => {
-                    const embed = embedChat("danger", `${icon("cancel")} Não foi possível editar informações! ${codeBlock(err)}`);
-                    interaction.update({ embeds: [embed] });
+                    interaction.update(embedChat("danger", `${icon("cancel")} Não foi possível editar informações! ${codeBlock(err)}`));
                 });
 
                 if (!isUrl(url)){
-                    const embed = embedChat("danger", `${icon("cancel")} A url enviada não é válida!`);
-                    interaction.followUp({ ephemeral, embeds: [embed] });
+                    interaction.followUp(embedChat("danger", `${icon("cancel")} A url enviada não é válida!`));
                     return;
                 }
                 return;
@@ -54,16 +52,14 @@ new Modal({
 
                 const result = await findResource(messageUrl, guild);
                 if (!result.success){
-                    const embed = embedChat("danger", result.error);
-                    interaction.followUp({ embeds: [embed] });
+                    interaction.followUp(embedChat("danger", result.error));
                     return;
                 }
                 const { message, resourceEmbed: oldResourceEmbed } = result;
                 const resourceInfo = getResourceInfo<"edit">(resourceEmbed);
 
                 if (message.id !== resourceInfo.messageId){
-                    const embed = embedChat("danger", `${icon("cancel")} Parece que você está tentando editar outro recurso`);
-                    interaction.followUp({ embeds: [embed] });
+                    interaction.followUp(embedChat("danger", `${icon("cancel")} Parece que você está tentando editar outro recurso`));
                     return;
                 }
 
@@ -104,7 +100,7 @@ new Modal({
                     })
                 );
 
-                const embedInfo = embedChat("warning", "Deseja salvar as alterações deste recurso?");
+                const embedInfo = embedChat("warning", "Deseja salvar as alterações deste recurso?").embed;
 
                 confirm({
                     components: buttons => [createRow(
@@ -116,18 +112,15 @@ new Modal({
                     async onClick(interaction, isCancel) {
                         if (isCancel){
                             await interaction.update(menus.resources.edit(getResourceInfo<"edit">(resourceEmbed)));
-                            const embed = embedChat("danger", "Você cancelou essa ação!");
-                            interaction.followUp({ ephemeral, embeds: [embed] });
+                            interaction.followUp(embedChat("danger", "Você cancelou essa ação!"));
                             return;
                         }
 
-                        const embed = embedChat("warning", `${icon(":a:spinner")} Aguarde...`);
-                        await interaction.update({ embeds: [embed], components: [] });
+                        await interaction.update(embedChat("warning", `${icon(":a:spinner")} Aguarde...`).custom(true));
 
                         message.edit({ embeds: [embedFinal], files: getEmbedFiles(embedFinal), components: [resourceRow] })
                         .then(async message => {
-                            const embed = embedChat("success", `${icon("check")} Recurso editado com sucesso! Confira: ${message.url}`);
-                            interaction.editReply({ embeds: [embed] });
+                            interaction.editReply(embedChat("success", `${icon("check")} Recurso editado com sucesso! Confira: ${message.url}`));
 
                             const now = new Date();
                             const time = 1000 * 60 * 5;
@@ -138,8 +131,7 @@ new Modal({
                             );
                         })
                         .catch(err => {
-                            const embed = embedChat("danger", `${icon("cancel")} Não foi possível editar o recurso! ${codeBlock(err)}`);
-                            interaction.editReply({ embeds: [embed] });
+                            interaction.editReply(embedChat("danger", `${icon("cancel")} Não foi possível editar o recurso! ${codeBlock(err)}`));
                         });
                     },
                 });

@@ -32,8 +32,7 @@ new Command({
 
         const memberData = await db.members.get(member);
         if (memberData.rank?.type === "zunder"){
-            const embed = embedChat("danger", `${icon("cancel")} Você já está registrado como membro Zunder`);
-            interaction.editReply({ embeds: [embed] });
+            interaction.editReply(embedChat("danger", `${icon("cancel")} Você já está registrado como membro Zunder`));
             return;
         }
 
@@ -41,8 +40,7 @@ new Command({
         const cooldownTime = cooldowns.get(member.id) ?? nowTime;
 
         if (cooldownTime > nowTime){
-            const embed = embedChat("danger", `${icon("clock")} Você poderá usar este comando novamente ${time(cooldownTime, "R")}`);
-            interaction.editReply({ embeds: [embed] });
+            interaction.editReply(embedChat("danger", `${icon("clock")} Você poderá usar este comando novamente ${time(cooldownTime, "R")}`));
             return;
         }
 
@@ -50,8 +48,7 @@ new Command({
 
         const managementChannel = findChannel(guild).byId(guildData?.channels?.management?.id ?? "");
         if (!managementChannel){
-            const embed = embedChat("danger", "Este sistema não está configurado!");
-            interaction.editReply({ embeds: [embed] });
+            interaction.editReply(embedChat("danger", "Este sistema não está configurado!"));
             return;
         }
 
@@ -90,8 +87,7 @@ new Command({
 
         managementChannel.send({ embeds: [embed], components: [row] })
         .then(() => {
-            const embed = embedChat("success", `${icon("check")} Sua solicitação de registro Zunder foi enviada!`);
-            interaction.editReply({ embeds: [embed] });
+            interaction.editReply(embedChat("success", `${icon("check")} Sua solicitação de registro Zunder foi enviada!`));
 
             const future = new Date();
             future.setMinutes(future.getMinutes() + 2);
@@ -99,8 +95,7 @@ new Command({
             cooldowns.set(member.id, future);
         })
         .catch(() => {
-            const embed = embedChat("danger", `${icon("cancel")} Não foi possível enviar a solicitação de registro!`);
-            interaction.editReply({ embeds: [embed] });
+            interaction.editReply(embedChat("danger", `${icon("cancel")} Não foi possível enviar a solicitação de registro!`));
         });
 
     }

@@ -84,12 +84,14 @@ new Command({
                 .then(message => {
                     message.react(icon("check").id);
                 
-                    const embed = embedChat("success", `${icon("check")} Mensagem enviada com sucesso! ${message.url}`);
-                    interaction.reply({ ephemeral, embeds: [embed] });
+                    interaction.reply(embedChat("success", 
+                        `${icon("check")} Mensagem enviada com sucesso! ${message.url}`
+                    ));
                 })
                 .catch(err => {
-                    const embed = embedChat("danger", `${icon("cancel")} Não foi possível enviar a mensagem! ${codeBlock(err)}`);
-                    interaction.reply({ ephemeral, embeds: [embed] }); 
+                    interaction.reply(embedChat("danger", 
+                        `${icon("cancel")} Não foi possível enviar a mensagem! ${codeBlock(err)}`
+                    )); 
                 });
                 return;
             }
@@ -146,12 +148,14 @@ new Command({
                 .then(message => {
                     message.react(icon("check").id);
                 
-                    const embed = embedChat("success", `${icon("check")} Mensagem enviada com sucesso! ${message.url}`);
-                    interaction.reply({ ephemeral, embeds: [embed] });
+                    interaction.reply(embedChat("success", 
+                        `${icon("check")} Mensagem enviada com sucesso! ${message.url}`
+                    ));
                 })
                 .catch(err => {
-                    const embed = embedChat("danger", `${icon("cancel")} Não foi possível enviar a mensagem! ${codeBlock(err)}`);
-                    interaction.reply({ ephemeral, embeds: [embed] }); 
+                    interaction.reply(embedChat("danger", 
+                        `${icon("cancel")} Não foi possível enviar a mensagem! ${codeBlock(err)}`
+                    ));
                 });
                 return;
             }
